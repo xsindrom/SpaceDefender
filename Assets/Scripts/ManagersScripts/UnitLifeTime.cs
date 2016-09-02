@@ -8,14 +8,16 @@ public class UnitLifeTime : MonoBehaviour
     void Start()
     {
         deathHandler = new DeathHandler();
-        deathHandler.AddAction(((IManager)ScoreManager.Instance).PerfomManager);
-        deathHandler.AddAction(((IManager)AchievementManager.Instance).PerfomManager);
+        deathHandler.AddAction(((IManager)ScoreManager.Instance).SendInfo);
+        deathHandler.AddAction(((IManager)AchievementManager.Instance).SendInfo);
         deathHandler.AddAction(KillObject);
     }
     void KillObject()
     {
         Destroy(gameObject);
     }
+
+    //--Test---
     void OnCollisionEnter2D(Collision2D collisionToDetect)
     {
         if (collisionToDetect.gameObject.tag == "Bullet")

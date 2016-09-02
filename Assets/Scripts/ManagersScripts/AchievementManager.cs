@@ -19,7 +19,8 @@ public class AchievementManager : IManager
     {
         instance = this;
     }
-    void IManager.PerfomManager()
+    //--Test---
+    void IManager.SendInfo()
     {
         if (ScoreManager.Instance.Score == 100.0f)
         {

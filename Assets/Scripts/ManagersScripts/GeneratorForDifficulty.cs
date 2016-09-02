@@ -12,8 +12,7 @@ public class GeneratorForDifficulty : MonoBehaviour
     void Start()
     {
         generator = gameObject.GetComponent<GeneratorForObjects>();
-        timerForActions = new Timer();
-        timerForActions.TimeToComplete = periodOfTime;
+        timerForActions = new Timer(periodOfTime);
         timerForActions.AddAction(IncreaseDifficulty);
     }
     private void IncreaseDifficulty()

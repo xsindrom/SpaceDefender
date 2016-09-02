@@ -27,8 +27,8 @@ public class ScoreManager : IManager
     {
         instance = this;
     }
-
-    void IManager.PerfomManager()
+    //--Test---
+    void IManager.SendInfo()
     {
         Debug.Log("Ur score is: " + score);
     }

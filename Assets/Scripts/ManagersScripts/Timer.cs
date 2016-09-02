@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 
-
 public class Timer 
 {
     private float timeToComplete;
@@ -17,7 +16,14 @@ public class Timer
             }
         }
     }
-
+    public Timer()
+    {
+        timeToComplete = 0;
+    }
+    public Timer(float timeToComplete)
+    {
+        this.timeToComplete = timeToComplete;
+    }
     private float timer;
     public delegate void ActionForTimer();
     private event ActionForTimer actionToComplete;

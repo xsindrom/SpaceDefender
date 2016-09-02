@@ -8,8 +8,7 @@ public class GeneratorForObjects : MonoBehaviour
     private Timer timerForActions;
     void Start()
     {
-        timerForActions = new Timer();
-        timerForActions.TimeToComplete = timeToGenerate;
+        timerForActions = new Timer(timeToGenerate);
         timerForActions.AddAction(GenerateObject);
     }
     private void GenerateObject()
