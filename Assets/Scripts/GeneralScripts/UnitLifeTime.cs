@@ -8,13 +8,6 @@ public class UnitLifeTime : MonoBehaviour
     void Start()
     {
         deathHandler = new DeathHandler();
-        deathHandler.AddAction(((IManager)ScoreManager.Instance).SendInfo);
-        deathHandler.AddAction(((IManager)AchievementManager.Instance).SendInfo);
-        deathHandler.AddAction(KillObject);
-    }
-    void KillObject()
-    {
-        Destroy(gameObject);
     }
 
     //--Test---
@@ -24,6 +17,7 @@ public class UnitLifeTime : MonoBehaviour
         {
             ScoreManager.Instance.Score += 10.0f;
             deathHandler.OnDeath();
+            Destroy(gameObject);
         }
     }
 }

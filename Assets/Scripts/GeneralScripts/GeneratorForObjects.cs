@@ -3,7 +3,9 @@ using System.Collections;
 
 public class GeneratorForObjects : MonoBehaviour
 {
+    [Header(StringHeadersInfo.OBJECTSTOGENERATE_Header)]
     public GameObject[] objectsToGenerate;
+    [Header(StringHeadersInfo.TIMEPERIOD_Header)]
     public float timeToGenerate;
     private Timer timerForActions;
     void Start()

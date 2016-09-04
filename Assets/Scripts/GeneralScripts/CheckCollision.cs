@@ -21,6 +21,9 @@ public class CheckCollision : MonoBehaviour {
     }
     void OnCollisionExit2D(Collision2D collisionToDetect)
     {
-        isTouching = false;
+        if (collisionToDetect.gameObject == whatToTouch)
+        {
+            isTouching = false;
+        }
     }
 }

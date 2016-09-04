@@ -3,12 +3,12 @@ using System.Collections;
 
 public class ControllGunSystem : MonoBehaviour
 {
-    //--Contolls rotation of Gun
+    [Header(StringHeadersInfo.DELTA_Angle_Header)]
     public float deltaAngle = 0.0f;
-    //--Key names;
+    [Header(StringHeadersInfo.KEY_NAME_Header)]
     public string rotateLeftKeyName;
     public string rotateRightKeyName;
-    //--Limits---
+    [Header(StringHeadersInfo.ANGLE_Limits_Header)]
     public float minAngle = 0.0f;
     public float maxAngle = 0.0f;
     private Rigidbody2D rbody;

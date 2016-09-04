@@ -27,4 +27,8 @@ public class AchievementManager : IManager
             Debug.Log("Well done, 100 points");
         }
     }
+    string IManager.GetInfo()
+    {
+        return "Well done, 100 points";
+    }
 }

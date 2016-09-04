@@ -20,7 +20,14 @@ public class ScoreManager : IManager
     public float Score
     {
         get { return score; }
-        set { score = value; }
+        set
+        {
+            if (value != score)
+            {
+                score = value;
+                ((IManager)this).SendInfo();
+            }
+        }
     }
 
     void Awake()
@@ -30,6 +37,10 @@ public class ScoreManager : IManager
     //--Test---
     void IManager.SendInfo()
     {
-        Debug.Log("Ur score is: " + score);
+        Debug.Log(StringCaptionsInfo.SCORE_Caption + Score);
+    }
+    string IManager.GetInfo()
+    {
+        return StringCaptionsInfo.SCORE_Caption + Score;
     }
 }

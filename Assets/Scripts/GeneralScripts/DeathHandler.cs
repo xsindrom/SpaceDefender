@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 public class DeathHandler
 {
-
     public delegate void DeathEvent();
     private event DeathEvent deathDetected;
 

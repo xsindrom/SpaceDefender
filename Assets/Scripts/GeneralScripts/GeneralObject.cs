@@ -6,15 +6,16 @@ public class GeneralObject : MonoBehaviour
     private float gravityScale;
     private Vector2 position;
     private Vector2 startDirection;
-    //--GravityScale---
+    [Header(StringHeadersInfo.GRAVITYSCALE_Header)]
     public float minGravityScale = 0.0f;
     public float maxGravityScale = 0.0f;
-    //--Position---
+    [Header(StringHeadersInfo.POSITION_Header)]
     public float minXPosition = 0.0f;
     public float maxXPosition = 0.0f;
     public float minYPosition = 0.0f;
     public float maxYPosition = 0.0f;
     //--Direction vector---
+    [Header(StringHeadersInfo.DIRECTION_Header)]
     public float minXDir = 0.0f;
     public float maxXDir = 0.0f;
     public float minYDir = 0.0f;
