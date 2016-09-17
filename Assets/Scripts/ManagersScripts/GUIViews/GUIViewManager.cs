@@ -31,6 +31,7 @@ public class GUIViewManager : MonoBehaviour
         SetTypeOfManager();
         textToView = transform.GetComponent<Text>();
         TextToView = manager.GetInfo();
+
     }
     void Update()
     {

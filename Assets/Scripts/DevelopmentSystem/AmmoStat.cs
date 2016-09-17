@@ -1,20 +1,17 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
-//--Temporary, will be changed after all bullet types will be known---
-public enum TypeOfAmmoEnum
+
+[Serializable]
+public class AmmoStat
 {
-    NotIdentified,
-    Bullet,
-    Grenade,
-    Ultimate,
-}
-public class AmmoScript
-{
+    [SerializeField]
     private int ammoSize;
+    [SerializeField]
     private int currentAmmo;
+    [SerializeField]
     private int deltaAmmo;
-    private TypeOfAmmoEnum typeOfAmmo = TypeOfAmmoEnum.NotIdentified;
     
     public int AmmoSize
     {
@@ -43,11 +40,6 @@ public class AmmoScript
             if (value >= 0 && value <= ammoSize) { deltaAmmo = value; }
         }
     }
-    public TypeOfAmmoEnum TypeOfAmmo
-    {
-        get { return typeOfAmmo; }
-        set { typeOfAmmo = value; }
-    }
     public bool IsAbleToShoot()
     {
         return (currentAmmo > 0 && currentAmmo <= ammoSize);
@@ -63,28 +55,20 @@ public class AmmoScript
         CurrentAmmo += ammoToAdd;
         if (action != null) { action(); }
     }
-    public AmmoScript()
+    public AmmoStat()
     {
         this.ammoSize = 0;
         this.currentAmmo = 0;
         this.deltaAmmo = 0;
     }
-    public AmmoScript(int ammoSize,int currentAmmo,int deltaAmmo)
+    public AmmoStat(int ammoSize,int currentAmmo,int deltaAmmo)
     {
         this.ammoSize = ammoSize;
         this.currentAmmo = currentAmmo;
         this.deltaAmmo = deltaAmmo;
-        this.typeOfAmmo = TypeOfAmmoEnum.NotIdentified;
-    }
-    public AmmoScript(int ammoSize, int currentAmmo, int deltaAmmo, TypeOfAmmoEnum typeOfAmmo)
-    {
-        this.ammoSize = ammoSize;
-        this.currentAmmo = currentAmmo;
-        this.deltaAmmo = deltaAmmo;
-        this.typeOfAmmo = typeOfAmmo;
     }
     public override string ToString()
     {
-        return "System: " + TypeOfAmmo.ToString() + " ammo left: " + CurrentAmmo;
+        return CurrentAmmo + "/" +AmmoSize;
     }
 }

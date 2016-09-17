@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//--Includes all captions in game---
 public static class StringCaptionsInfo
 {
     //--A---

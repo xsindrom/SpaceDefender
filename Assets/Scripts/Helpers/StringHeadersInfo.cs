@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//--Includes all captions in game---
+//--Includes all headers in game---
 public static class StringHeadersInfo
 {
     //--A---
@@ -21,6 +21,7 @@ public static class StringHeadersInfo
     //--H---
     //--I---
     //--J---
+    public const string FILE_Header = "File";
     //--K---
     public const string KEY_NAME_Header = "Key names";
     //--L---

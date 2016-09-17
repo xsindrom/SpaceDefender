@@ -3,19 +3,22 @@ using System.Collections;
 
 public class UnitLifeTime : MonoBehaviour
 {
+    public float lifeCost;
     private DeathHandler deathHandler;
     
     void Start()
     {
         deathHandler = new DeathHandler();
+        deathHandler.AddAction(AddScore);
     }
-
-    //--Test---
+    void AddScore()
+    {
+        ScoreManager.Instance.AddScore(lifeCost, (float)GunStats.scoreMultipler);
+    }
     void OnCollisionEnter2D(Collision2D collisionToDetect)
     {
-        if (collisionToDetect.gameObject.tag == "Bullet")
+        if (collisionToDetect.gameObject.tag == StringNamesInfo.BULLET_tag)
         {
-            ScoreManager.Instance.Score += 10.0f;
             deathHandler.OnDeath();
             Destroy(gameObject);
         }

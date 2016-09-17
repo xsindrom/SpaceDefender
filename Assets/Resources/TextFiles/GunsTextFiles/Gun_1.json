@@ -1,0 +1,17 @@
+{
+    "gunName": "Gun_1",
+    "ammoStats": {
+        "ammoSize": 200,
+        "currentAmmo": 100,
+        "deltaAmmo": 1
+    },
+    "attackRate": 0.5,
+    "powerfull": 100.0,
+    "minAngle": 30.0,
+    "maxAngle": 150.0,
+    "gunType": 2,
+    "maxAmmoSize": 500,
+    "maxPowerfull": 400.0,
+    "maxAttackRate": 0.2,
+    "scoreMultipler": 1.0
+}

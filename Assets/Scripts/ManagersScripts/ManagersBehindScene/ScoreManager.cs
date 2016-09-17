@@ -29,12 +29,19 @@ public class ScoreManager : IManager
             }
         }
     }
+    private ScoreManager() { }
 
+    public void AddScore(float score,float scoreMultipler)
+    {
+        Score += score * scoreMultipler;
+    }
+    
     void Awake()
     {
         instance = this;
     }
-    //--Test---
+    
+   
     void IManager.SendInfo()
     {
         Debug.Log(StringCaptionsInfo.SCORE_Caption + Score);
