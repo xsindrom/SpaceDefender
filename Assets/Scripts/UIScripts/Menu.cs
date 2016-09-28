@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using LitJson;
+using System.IO;
 using System.Collections;
 
 public class Menu : MonoBehaviour
 {
+    #region SINGLETON
     private static Menu instance;
     public static Menu Instance
     {
@@ -16,7 +19,6 @@ public class Menu : MonoBehaviour
                 menuObject.AddComponent<Menu>();
                 instance = menuObject.gameObject.GetComponent<Menu>();
             }
-            Debug.Log(instance.transform.parent);
             return instance;
         }
         set
@@ -27,12 +29,56 @@ public class Menu : MonoBehaviour
             }
         }
     }
+    #endregion
+    #region STANDART_EVENTS
+    void Awake()
+    {
+        CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName);
+        CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH);
+    }
+    #endregion
+    #region LOGIC
+    void CreateJsonFiles(string jsonName)
+    {
+        if (!File.Exists(jsonName))
+        {
+            File.Create(jsonName);
+        }
+    }
     public void GoToMainMenu()
     {
+        #region FILE_PROCESSING PART
+        string path = Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName;
+        string jString = File.ReadAllText(path);
+        JsonData jDataList = JsonMapper.ToObject(jString);
+        if (jDataList == null)
+        {
+            jDataList = new JsonData();
+            jDataList.SetJsonType(JsonType.Array);
+        }
+        if (!jDataList.IsArray) { jDataList.SetJsonType(JsonType.Array); }
+        PlayerStats temp = new PlayerStats(jDataList.Count-1, path);
+        if (temp == null)
+        {
+            temp = PlayerStats.Current;
+            jDataList.Add(JsonMapper.ToObject(JsonUtility.ToJson(temp)));
+            File.WriteAllText(path, jDataList.ToJson());
+        }
+        if (temp.Score < PlayerStats.Current.Score)
+        {
+            jDataList.Add(JsonMapper.ToObject(JsonUtility.ToJson(PlayerStats.Current)));
+            File.WriteAllText(path, jDataList.ToJson());
+        }
+        #endregion
+        #region SaveCurrentPlayerStats
+        PlayerStats.Current.SavePlayerStats(Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH);
+        #endregion
+        SetValuesToNull();
         SceneManager.LoadScene(0);
     }
     public void StartGame()
     {
+        SetValuesToNull();
         SceneManager.LoadScene(1);
     }
     public void Quit()
@@ -41,6 +87,13 @@ public class Menu : MonoBehaviour
     }
     public void RestartScene()
     {
+        SetValuesToNull();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    public void SetValuesToNull()
+    {
+        ScoreManager.Instance.Score = 0;
+        GunStats.Instance.AmmoStats.CurrentAmmo = GunStats.Instance.AmmoStats.AmmoSize;
+    }
+    #endregion
 }

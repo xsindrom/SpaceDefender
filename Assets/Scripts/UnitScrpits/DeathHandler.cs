@@ -10,6 +10,7 @@ public class DeathHandler
     {
         OnDeath();
     }
+    #region ADD_ACTIONS
     public void AddAction(DeathEvent action)
     {
         deathDetected += action;
@@ -18,7 +19,8 @@ public class DeathHandler
     {
         deathDetected -= action;
     }
-
+    #endregion
+    #region PERFOM_ACTIONS
     public void OnDeath()
     {
         if (deathDetected != null)
@@ -26,4 +28,5 @@ public class DeathHandler
             deathDetected();
         }
     }
+    #endregion
 }

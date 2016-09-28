@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
-
-
 [Serializable]
 public class AmmoStat
 {
+    #region FIELDS
     [SerializeField]
     private int ammoSize;
     [SerializeField]
     private int currentAmmo;
     [SerializeField]
     private int deltaAmmo;
-    
+    #endregion
+    #region PROPERTIES
     public int AmmoSize
     {
         get { return ammoSize; }
@@ -40,11 +40,12 @@ public class AmmoStat
             if (value >= 0 && value <= ammoSize) { deltaAmmo = value; }
         }
     }
+    #endregion
+    #region LOGIC
     public bool IsAbleToShoot()
     {
         return (currentAmmo > 0 && currentAmmo <= ammoSize);
     }
-
     public void DecreaseAmmo(int ammoToDecrease, VoidDelegate action)
     {
         CurrentAmmo -= ammoToDecrease;
@@ -55,6 +56,8 @@ public class AmmoStat
         CurrentAmmo += ammoToAdd;
         if (action != null) { action(); }
     }
+    #endregion
+    #region CONSTRUCTORS
     public AmmoStat()
     {
         this.ammoSize = 0;
@@ -67,6 +70,7 @@ public class AmmoStat
         this.currentAmmo = currentAmmo;
         this.deltaAmmo = deltaAmmo;
     }
+    #endregion
     public override string ToString()
     {
         return CurrentAmmo + "/" +AmmoSize;

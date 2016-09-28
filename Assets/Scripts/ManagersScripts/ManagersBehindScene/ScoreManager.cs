@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ScoreManager : IManager
 {
+    #region SINGLETON
     private static ScoreManager instance;
     public static ScoreManager Instance
     {
@@ -15,9 +16,12 @@ public class ScoreManager : IManager
             return instance;
         }
     }
-
-    private float score;
-    public float Score
+    #endregion
+    #region FIELDS
+    private int score;
+    #endregion
+    #region PROPERTIES
+    public int Score
     {
         get { return score; }
         set
@@ -26,28 +30,35 @@ public class ScoreManager : IManager
             {
                 score = value;
                 ((IManager)this).SendInfo();
+                PlayerStats.Current.Score = score;
             }
         }
     }
+    #endregion
+    #region CONSTRUCTORS
     private ScoreManager() { }
-
-    public void AddScore(float score,float scoreMultipler)
-    {
-        Score += score * scoreMultipler;
-    }
-    
+    #endregion
+    #region STANDART_EVENTS
     void Awake()
     {
         instance = this;
     }
-    
-   
+    #endregion
+    #region LOGIC
+    public void AddScore(int score, int scoreMultipler)
+    {
+        Score += score * scoreMultipler;
+    }
     void IManager.SendInfo()
     {
+#if UNITY_EDITOR
         Debug.Log(StringCaptionsInfo.SCORE_Caption + Score);
+#endif
     }
+
     string IManager.GetInfo()
     {
-        return StringCaptionsInfo.SCORE_Caption + Score;
+        return Score.ToString();
     }
+    #endregion
 }

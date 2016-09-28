@@ -11,7 +11,7 @@
     "maxAngle": 150.0,
     "gunType": 2,
     "maxAmmoSize": 500,
-    "maxPowerfull": 400.0,
+    "maxPowerFull": 400.0,
     "maxAttackRate": 0.2,
-    "scoreMultipler": 1.0
+    "levelToOpen": 5
 }

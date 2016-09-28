@@ -6,6 +6,7 @@ using System.IO;
 using System.Collections.Generic;
 public static class MyExtensionMethods
 {
+    #region GAMEOBJECT_EXTENSIONS
     public static void AddComponentsToGameObject(this GameObject whereToAdd, params Component[] components)
     {
         foreach (var component in components)
@@ -28,7 +29,17 @@ public static class MyExtensionMethods
         if (image == null) { return; }
         image.sprite = spriteToSet;
     }
-
+    public static GameObject[] GetChilds(this GameObject parent)
+    {
+        GameObject[] childs = new GameObject[parent.transform.childCount];
+        for (int index = 0; index < childs.Length; index++)
+        {
+            childs[index] = parent.transform.GetChild(index).gameObject;
+        }
+        return childs;
+    }
+    #endregion
+    #region GAMEOBJECT_ARRAY_EXTENSIONS
     public static void SetParentToObjects(this GameObject[] childObjects, GameObject parent)
     {
         foreach (GameObject child in childObjects)
@@ -43,15 +54,8 @@ public static class MyExtensionMethods
             whereToSet[index].name = name + index;
         }
     }
-    public static GameObject[] GetChilds(this GameObject parent)
-    {
-        GameObject[] childs = new GameObject[parent.transform.childCount];
-        for (int index = 0; index < childs.Length; index++)
-        {
-            childs[index] = parent.transform.GetChild(index).gameObject;
-        }
-        return childs;
-    }
+    #endregion
+    #region GENERIC_EXTENSIONS
     public static void CacheComponents<T>(this T[] whereToCache,GameObject[] from)
     {
         for (int index = 0; index < from.Length; index++)
@@ -59,6 +63,8 @@ public static class MyExtensionMethods
             whereToCache[index] = from[index].GetComponent<T>();
         }
     }
+    #endregion
+    #region JSONDATA_EXTENSIONS
     public static void SaveJDataToList<T>(this JsonData jDataList, string jsonName,params T[] objectsToSaveInJson)
     {
         foreach (var objectToSaveInJson in objectsToSaveInJson as IList)
@@ -72,4 +78,5 @@ public static class MyExtensionMethods
         jData = JsonMapper.ToObject(JsonMapper.ToJson(objectToSaveInJson));
         File.WriteAllText(jsonName, jData.ToJson());
     }
+    #endregion
 }

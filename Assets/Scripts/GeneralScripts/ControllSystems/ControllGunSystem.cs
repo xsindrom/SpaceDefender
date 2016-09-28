@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ControllGunSystem : MonoBehaviour
 {
+    #region FIELDS
     [Header(StringHeadersInfo.DELTA_Angle_Header)]
     public float deltaAngle = 0.0f;
 #if UNITY_STANDALONE_WIN
@@ -13,7 +14,8 @@ public class ControllGunSystem : MonoBehaviour
     [Header(StringHeadersInfo.ANGLE_Limits_Header)]
     private float minAngle = 0.0f;
     private float maxAngle = 0.0f;
-
+    #endregion
+    #region PROPERTIES
     public float MinAngle
     {
         get { return minAngle; }
@@ -30,13 +32,18 @@ public class ControllGunSystem : MonoBehaviour
             if (value >= 0.0f && value <= 180.0f) { maxAngle = value; }
         }
     }
+    #endregion
+    #region COMPONENTS_TO_CACHE
     private Rigidbody2D rbody;
-
+    #endregion
+    #region STANDART_EVENTS
     void Start()
     {
         rbody = gameObject.GetComponent<Rigidbody2D>();
     }
+    #endregion
 #if UNITY_ANDROID
+    #region LOGIC
     public void RotateLeftGun()
     {
         int rotationAngle = Mathf.FloorToInt(rbody.rotation);
@@ -53,6 +60,7 @@ public class ControllGunSystem : MonoBehaviour
             rbody.rotation -= deltaAngle;
         }
     }
+    #endregion
 #endif
 
 #if UNITY_STANDALONE_WIN

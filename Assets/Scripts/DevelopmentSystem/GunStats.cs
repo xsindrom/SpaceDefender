@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class GunStats
 {
     public enum GunTypeEnum { NotIdentified, Weak, Normal, Strong }
+    #region FIELDS
     [SerializeField]
     private string gunName;
     [SerializeField]
@@ -28,9 +29,9 @@ public class GunStats
     private AmmoStat ammoStats;
     //--Read From---
     [SerializeField]
-    private string gunStatJsonString;
-    private JsonData gunStatJData;
-
+    #endregion
+    
+    #region PROPERTIES
     public string GunName
     {
         get { return gunName; }
@@ -101,8 +102,8 @@ public class GunStats
             gunType = (value != GunTypeEnum.NotIdentified) ? value : GunTypeEnum.NotIdentified;
         }
     }
-    [SerializeField]
-    public static double scoreMultipler = 1.0f;
+    #endregion
+    #region SINGLETON
     [NonSerialized]
     private static GunStats instance;
     public static GunStats Instance
@@ -123,6 +124,8 @@ public class GunStats
             }
         }
     }
+    #endregion
+    #region MESSURES
     [SerializeField]
     private double maxPowerFull;
     public double MaxPowerFull
@@ -141,24 +144,32 @@ public class GunStats
     {
         get { return maxAmmoSize; }
     }
-
+    [SerializeField]
+    private int levelToOpen;
+    public int LevelToOpen
+    {
+        get { return levelToOpen; }
+    }
     public float Difference(float less, float bigger)
     {
         return less / bigger;
     }
-
-    public GunStats()
-    {
-
-    }
-    public GunStats(string jsonName)
-    {
-        LoadDataFromJSON(jsonName);
-    }
+    #endregion
+    #region CONSTRUCTORS
+    public GunStats() { }
+    public GunStats(string jsonName) { LoadDataFromJSON(jsonName); }
+    #endregion
+    #region FILE_PROCESSING_PART
+    private string gunStatJsonString;
+    private JsonData gunStatJData;
     public void LoadDataFromJSON(string jsonName)
     {
+        #region GET_DATA
         string asset = jsonName.Replace(".json", "");
         gunStatJsonString = Resources.Load<TextAsset>(StringPathsInfo.GUNS_TEXTFILES_PATH + asset).text;
+        if (gunStatJsonString.Length == 0) { return; }
+        #endregion
+        #region PARSE_DATA
         this.GunName = JsonUtility.FromJson<GunStats>(gunStatJsonString).GunName;
         this.AmmoStats.AmmoSize = JsonUtility.FromJson<GunStats>(gunStatJsonString).AmmoStats.AmmoSize;
         this.AmmoStats.CurrentAmmo = JsonUtility.FromJson<GunStats>(gunStatJsonString).AmmoStats.CurrentAmmo;
@@ -171,12 +182,14 @@ public class GunStats
         this.maxAmmoSize = JsonUtility.FromJson<GunStats>(gunStatJsonString).MaxAmmoSize;
         this.maxPowerFull = JsonUtility.FromJson<GunStats>(gunStatJsonString).MaxPowerFull;
         this.maxAttackRate = JsonUtility.FromJson<GunStats>(gunStatJsonString).MaxAttackRate;
-        Debug.Log(this.maxPowerFull);
+        this.levelToOpen = JsonUtility.FromJson<GunStats>(gunStatJsonString).LevelToOpen;
+        #endregion
     }
     private void SaveDataToJSON(string jsonName)
     {
         File.WriteAllText(StringPathsInfo.RESOURCES_PATH + jsonName, JsonUtility.ToJson(this, true));
     }
+    #endregion
     public override string ToString()
     {
         return "GunName" + gunName + "\n" +
@@ -188,7 +201,6 @@ public class GunStats
                "StartSpeed: " + Powerfull + "\n" +
                "MinAngle: " + MinAngle + "\n" +
                "MaxAngle: " + MaxAngle + "\n" +
-               "GunType: " + GunType.ToString() + "\n" +
-               "scoreMultipler: " + scoreMultipler + "\n";
+               "GunType: " + GunType.ToString() + "\n";
     }
 }

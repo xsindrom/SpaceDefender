@@ -9,8 +9,18 @@ using System.Collections;
 public class StartGameScript : MonoBehaviour
 {
     public InputField inputField;
+    #region FILE_PROCESSING_PART
     private JsonData jData;
     private string jsonName;
+    void CreateJsonFile(string jsonName)
+    {
+        if (!File.Exists(jsonName))
+        {
+            File.Create(jsonName);
+        }
+    }
+    #endregion
+    #region STANDART_EVENTS
     void Awake()
     {
         jsonName = Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH;
@@ -18,12 +28,10 @@ public class StartGameScript : MonoBehaviour
         {
             jData = new JsonData();
         }
-        if (!File.Exists(jsonName))
-        {
-           File.Create(jsonName);
-        }
+        CreateJsonFile(jsonName);
     }
-  
+    #endregion
+    #region LOGIC
     public void StartNewGame()
     {
         if (inputField.text.Length != 0)
@@ -34,18 +42,24 @@ public class StartGameScript : MonoBehaviour
             Menu.Instance.StartGame();
         }
     }
+    public void LoadPreviousGame()
+    {
+        if (GunStats.Instance.GunType != GunStats.GunTypeEnum.NotIdentified)
+        {
+            LoadGame();
+            Menu.Instance.StartGame();
+        }
+    }
     public void LoadGame()
     {
         string jString = File.ReadAllText(jsonName);
-        if(jString.Length == 0)
-        {
-            return;
-        }
+        if (jString.Length == 0) { return; }
         PlayerStats.Current = JsonUtility.FromJson<PlayerStats>(jString);
     }
     public void SaveGame()
     {
-        string jString = JsonUtility.ToJson(new PlayerStats(inputField.text), true);
+        string jString = JsonUtility.ToJson(PlayerStats.Current, true);
         File.WriteAllText(jsonName, jString);
     }
+    #endregion
 }

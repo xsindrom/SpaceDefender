@@ -4,6 +4,7 @@ using System.IO;
 using LitJson;
 public class ShootSystem : MonoBehaviour
 {
+    #region SINGLETON
     private GameObject toInstantiate;
     public GameObject ToInstantiate
     {
@@ -16,16 +17,18 @@ public class ShootSystem : MonoBehaviour
             }
         }
     }
+    #endregion
+    #region FIELDS
     [Header(StringHeadersInfo.OFFSETVECTOR_Header)]
     public Vector3 offset;
     [Header(StringHeadersInfo.AMMOSTATS_Header)]
     private float attackRate;
     [Header(StringHeadersInfo.MANAGER_Header)]
     public GUIBulletManager bulletManager;
-
     private Timer timerForActions;
     private AmmoStat ammoStat;
-
+    #endregion
+    #region PROPERTIES
     public AmmoStat AmmoStats
     {
         private get { return ammoStat; }
@@ -48,6 +51,8 @@ public class ShootSystem : MonoBehaviour
             }
         }
     }
+    #endregion
+    #region LOGIC
     public void CreateInfoAboutShoot()
     {
         bulletManager.SetInfo(ammoStat.ToString());
@@ -80,7 +85,6 @@ public class ShootSystem : MonoBehaviour
     }
 #endif
 #if UNITY_ANDROID
-
     public void Shoot()
     {
         if (toInstantiate == null)
@@ -93,6 +97,6 @@ public class ShootSystem : MonoBehaviour
             ammoStat.DecreaseAmmo(ammoStat.DeltaAmmo, CreateInfoAboutShoot);
         }
     }
-    
 #endif
+    #endregion
 }

@@ -20,11 +20,14 @@ public class AchievementManager : IManager
         instance = this;
     }
     //--Test---
+
     void IManager.SendInfo()
     {
         if (ScoreManager.Instance.Score == 100.0f)
         {
+#if UNITY_EDITOR
             Debug.Log("Well done, 100 points");
+#endif
         }
     }
     string IManager.GetInfo()

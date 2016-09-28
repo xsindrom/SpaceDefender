@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-
-//--Seems to be good---
-public class GUIBulletManager : MonoBehaviour {
-
+public class GUIBulletManager : MonoBehaviour
+{
+    #region COMPONENTS_TO_SET
     [Header(StringHeadersInfo.GUIELEMENT_Header)]
     public GameObject[] guiElements;
+    #endregion
+    #region COMPONENTS_TO_CACHE
     private Text[] textElements;
+    #endregion
+    #region STANDART_EVENTS
     void Awake()
     {
         textElements = new Text[guiElements.Length];
@@ -16,12 +19,14 @@ public class GUIBulletManager : MonoBehaviour {
             textElements[index] = guiElements[index].GetComponent<Text>();
         }
     }
+    #endregion
+    #region LOGIC
     public void SetInfo(string infoToGet)
     {
         foreach (Text textElement in textElements)
         {
             textElement.text = infoToGet;
         }
-        
     }
+    #endregion
 }

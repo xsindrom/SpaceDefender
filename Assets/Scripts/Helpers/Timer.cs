@@ -2,9 +2,15 @@
 using System;
 using System.Collections;
 
-public class Timer 
+public class Timer
 {
+    #region FIELDS
+    private float timer;
     private float timeToComplete;
+    public delegate void ActionForTimer();
+    private event ActionForTimer actionToComplete;
+    #endregion
+    #region PROPERTIES
     public float TimeToComplete
     {
         get { return timeToComplete; }
@@ -16,6 +22,8 @@ public class Timer
             }
         }
     }
+    #endregion
+    #region CONSTRUCTORS
     public Timer()
     {
         timeToComplete = 0;
@@ -24,10 +32,8 @@ public class Timer
     {
         this.timeToComplete = timeToComplete;
     }
-    private float timer;
-    public delegate void ActionForTimer();
-    private event ActionForTimer actionToComplete;
-
+    #endregion
+    #region ADDING_ACTIONS
     public void AddAction(ActionForTimer action)
     {
         actionToComplete += action;
@@ -37,7 +43,8 @@ public class Timer
     {
         actionToComplete -= action;
     }
-
+    #endregion
+    #region PERFORM_ACTIONS
     public void CompleteAction()
     {
         timer -= Time.deltaTime;
@@ -50,4 +57,5 @@ public class Timer
             timer = timeToComplete;
         }
     }
+    #endregion
 }

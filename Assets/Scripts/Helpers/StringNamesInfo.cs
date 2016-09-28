@@ -6,6 +6,10 @@ public static class StringNamesInfo
 {
 
     //--A---
+    public const string AMMOSIZESTAT_image_name = "AmmoSizeStatToFill";
+    public const string AMMOSIZESTAT_text_name = "AmmoSizeStatText";
+    public const string ATTACKRATESTAT_image_name = "AttackRateStatToFill";
+    public const string ATTACKRATESTAT_text_name = "AttackRateStatText";
     //--B---
     public const string BULLET_tag = "Bullet";
     //--C---
@@ -13,9 +17,12 @@ public static class StringNamesInfo
     //--E---
     public const string EFFECT_tag = "Effect";
     public const string EFFECT_group = "EffectGroup";
+    public const string EVENT_manager_name = "EventManager";
     //--F---
     //--G---
     public const string GUN_name = "Gun_";
+    public const string GUNTYPESTAT_image_name = "GunTypeStatToFill";
+    public const string GUNTYPESTAT_text_name = "GunTypeStatText";
     //--H---
     public const string HIDEPANEL_animation = "HidePanel";
     //--I---
@@ -29,6 +36,8 @@ public static class StringNamesInfo
     //--N---
     //--O---
     //--P---
+    public const string POWERFULLSTAT_image_name = "PowerFullStatToFill";
+    public const string POWERFULLSTAT_text_name = "PowerFullStatText";
     //--Q---
     //--R---
     //--S---
