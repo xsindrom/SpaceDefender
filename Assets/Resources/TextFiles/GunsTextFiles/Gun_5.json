@@ -1,0 +1,17 @@
+{
+    "gunName": "Gun_5",
+    "ammoStats": {
+        "ammoSize": 1500,
+        "currentAmmo": 1500,
+        "deltaAmmo": 2
+    },
+    "attackRate": 0.5,
+    "powerfull": 200.0,
+    "minAngle": 15.0,
+    "maxAngle": 165.0,
+    "gunType": 2,
+    "maxAmmoSize": 3000,
+    "maxPowerFull": 1000.0,
+    "maxAttackRate": 0.1,
+    "levelToOpen": 15
+}

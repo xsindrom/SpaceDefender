@@ -6,6 +6,9 @@ public class GeneratorForObjects : MonoBehaviour
     #region FIELDS
     [Header(StringHeadersInfo.OBJECTSTOGENERATE_Header)]
     public GameObject[] objectsToGenerate;
+    [Header(StringHeadersInfo.AMMOUNT_limits)]
+    public int minAmount = 0;
+    public int maxAmount = 0;
     [Header(StringHeadersInfo.TIMEPERIOD_Header)]
     public float timeToGenerate;
     private Timer timerForActions;
@@ -24,7 +27,14 @@ public class GeneratorForObjects : MonoBehaviour
     #region LOGIC
     private void GenerateObject()
     {
-        Instantiate(objectsToGenerate[Random.Range(0, objectsToGenerate.Length - 1)]);
+        for (int index = 0; index < SetAmountOfObjectsToGenerate(); index++)
+        {
+            Instantiate(objectsToGenerate[Random.Range(0, objectsToGenerate.Length - 1)]);
+        }
+    }
+    private int SetAmountOfObjectsToGenerate()
+    {
+        return Random.Range(minAmount, maxAmount);
     }
     #endregion
 }

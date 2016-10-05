@@ -6,6 +6,7 @@ public static class StringHeadersInfo
 {
     //--A---
     public const string AMMOSTATS_Header = "Ammo stats";
+    public const string AMMOUNT_limits = "Ammount limits";
     public const string ANGLE_Limits_Header = "Angle limits";
     //--B---
     //--C---
@@ -36,6 +37,7 @@ public static class StringHeadersInfo
     //--Q---
     //--R---
     //--S---
+    public const string SPEED_Limits_Header = "Speed limits";
     //--T---
     public const string TIME_Limits_Header = "Time limits";
     public const string TIMEPERIOD_Header = "Time period";

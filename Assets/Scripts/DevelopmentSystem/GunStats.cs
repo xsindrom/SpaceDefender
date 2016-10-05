@@ -7,7 +7,7 @@ using System.Collections.Generic;
 [Serializable]
 public class GunStats
 {
-    public enum GunTypeEnum { NotIdentified, Weak, Normal, Strong }
+    public enum GunTypeEnum { NotIdentified, Weak, Normal, Strong, Ultimate }
     #region FIELDS
     [SerializeField]
     private string gunName;
@@ -158,6 +158,17 @@ public class GunStats
     #region CONSTRUCTORS
     public GunStats() { }
     public GunStats(string jsonName) { LoadDataFromJSON(jsonName); }
+    public static GunStats Empty
+    {
+        get
+        {
+            AmmoStat emptyAmmoStats = new AmmoStat();
+            GunStats emptyStats = new GunStats();
+            emptyStats.ammoStats = emptyAmmoStats;
+            emptyStats.GunType = GunTypeEnum.NotIdentified;
+            return emptyStats;
+        }
+    }
     #endregion
     #region FILE_PROCESSING_PART
     private string gunStatJsonString;
@@ -202,5 +213,22 @@ public class GunStats
                "MinAngle: " + MinAngle + "\n" +
                "MaxAngle: " + MaxAngle + "\n" +
                "GunType: " + GunType.ToString() + "\n";
+    }
+    public override bool Equals(object obj)
+    {
+        if (obj == null) { return false; }
+        GunStats toCompare = (GunStats)obj;
+        if (toCompare == null) { return false; }
+        if (this.ammoStats.AmmoSize == toCompare.ammoStats.AmmoSize)
+            if (this.ammoStats.CurrentAmmo == toCompare.ammoStats.CurrentAmmo)
+                if (this.ammoStats.DeltaAmmo == toCompare.ammoStats.DeltaAmmo)
+                    if (this.attackRate == toCompare.attackRate)
+                        if (this.powerfull == toCompare.powerfull)
+                            if (this.minAngle == toCompare.minAngle)
+                                if (this.maxAngle == toCompare.maxAngle)
+                                    if (this.gunType == toCompare.gunType)
+                                        if (this.gunName.Equals(toCompare.gunName))
+                                            return true;
+        return false;
     }
 }

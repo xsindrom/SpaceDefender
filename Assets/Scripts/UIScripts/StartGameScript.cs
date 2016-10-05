@@ -44,10 +44,13 @@ public class StartGameScript : MonoBehaviour
     }
     public void LoadPreviousGame()
     {
-        if (GunStats.Instance.GunType != GunStats.GunTypeEnum.NotIdentified)
+        if(!GunStats.Instance.Equals(GunStats.Empty))
         {
             LoadGame();
-            Menu.Instance.StartGame();
+            if (!PlayerStats.Current.Equals(PlayerStats.Empty))
+            {
+                Menu.Instance.StartGame();
+            }
         }
     }
     public void LoadGame()

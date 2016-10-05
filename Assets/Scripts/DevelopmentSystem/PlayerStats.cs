@@ -26,6 +26,7 @@ public class PlayerStats
             if (value != null)
             {
                 name = value;
+                GUIManager.Instance.NameToSet = name;
             }
         }
     }
@@ -63,11 +64,13 @@ public class PlayerStats
             {
                 level = value;
                 maxExperience = 100 * (int)Mathf.Pow(2, level);
+                scoreMultipler++;
+                GUIManager.Instance.LevelToSet = level;
             }
         }
     }
     [SerializeField]
-    private int scoreMultipler = 1;
+    private int scoreMultipler = 0;
     public int ScoreMultipler
     {
         get { return scoreMultipler; }
@@ -76,6 +79,7 @@ public class PlayerStats
             if (value > 0)
             {
                 scoreMultipler = value;
+                GUIManager.Instance.ScoreMultiplerToSet = scoreMultipler;
             }
         }
     }
@@ -150,6 +154,28 @@ public class PlayerStats
         this.Level = level;
         this.Experience = 0;
         this.scoreMultipler = scoreMultipler;
+    }
+    public static PlayerStats Empty
+    {
+        get
+        {
+            PlayerStats emptyStats = new PlayerStats();
+            return emptyStats;
+        }
+    }
+    public override bool Equals(object obj)
+    {
+        if (obj == null) { return false; }
+        PlayerStats toCompare = (PlayerStats)obj;
+        if (toCompare == null) { return false; }
+        if (this.id == toCompare.id)
+            if (this.score == toCompare.score)
+                if (this.level == toCompare.level)
+                    if (this.experience == toCompare.experience)
+                        if (this.scoreMultipler == toCompare.scoreMultipler)
+                            if (this.name.Equals(toCompare.name))
+                                return true;
+        return false;
     }
     #endregion
 

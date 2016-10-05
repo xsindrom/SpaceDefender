@@ -29,7 +29,8 @@ public class ScoreManager : IManager
             if (value != score)
             {
                 score = value;
-                ((IManager)this).SendInfo();
+                //((IManager)this).SendInfo();
+                GUIManager.Instance.ScoreToSet = score;
                 PlayerStats.Current.Score = score;
             }
         }

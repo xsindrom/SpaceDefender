@@ -49,7 +49,7 @@ public class LeaderBoardFillScript : MonoBehaviour
             leaders[index] = new PlayerStats(index, jsonName);
             childrenRecords[index] = Instantiate(prefabToInstatiate) as GameObject;
             #region FILL_DATA
-            FillText(0, index.ToString(), childrenRecords[index]);
+            FillText(0, (size-index).ToString(), childrenRecords[index]);
             FillText(1, leaders[index].Name, childrenRecords[index]);
             FillText(2, leaders[index].Score.ToString(), childrenRecords[index]);
             FillText(3, leaders[index].Level.ToString(), childrenRecords[index]);

@@ -23,8 +23,6 @@ public class ShootSystem : MonoBehaviour
     public Vector3 offset;
     [Header(StringHeadersInfo.AMMOSTATS_Header)]
     private float attackRate;
-    [Header(StringHeadersInfo.MANAGER_Header)]
-    public GUIBulletManager bulletManager;
     private Timer timerForActions;
     private AmmoStat ammoStat;
     #endregion
@@ -55,7 +53,7 @@ public class ShootSystem : MonoBehaviour
     #region LOGIC
     public void CreateInfoAboutShoot()
     {
-        bulletManager.SetInfo(ammoStat.ToString());
+        GUIManager.Instance.AmmoToSet = ammoStat.CurrentAmmo;
     }
 #if UNITY_STANDALONE_WIN
     void Start()

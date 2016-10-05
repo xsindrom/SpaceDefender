@@ -70,11 +70,7 @@ public class Menu : MonoBehaviour
             File.WriteAllText(path, jDataList.ToJson());
         }
         #endregion
-        #region SaveCurrentPlayerStats
-        PlayerStats.Current.SavePlayerStats(Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH);
-        #endregion
-        SetValuesToNull();
-        SceneManager.LoadScene(0);
+        OnSceneLeft(0);
     }
     public void StartGame()
     {
@@ -83,12 +79,18 @@ public class Menu : MonoBehaviour
     }
     public void Quit()
     {
+        PlayerStats.Current.SavePlayerStats(Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH);
         Application.Quit();
     }
     public void RestartScene()
     {
+        OnSceneLeft(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void OnSceneLeft(int index)
+    {
+        PlayerStats.Current.SavePlayerStats(Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH);
         SetValuesToNull();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(index);
     }
     public void SetValuesToNull()
     {

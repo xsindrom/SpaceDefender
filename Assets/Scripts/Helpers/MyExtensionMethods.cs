@@ -79,4 +79,13 @@ public static class MyExtensionMethods
         File.WriteAllText(jsonName, jData.ToJson());
     }
     #endregion
+    #region UI_TEXT_EXTENSIONS
+    public static void SetText(this Text[] textList, string whatToSet)
+    {
+        foreach (Text text in textList)
+        {
+            text.text = whatToSet;
+        }
+    }
+    #endregion
 }

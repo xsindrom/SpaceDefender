@@ -13,7 +13,7 @@ public class GunImagesFillScript : MonoBehaviour
     public Orientation orientation;
     #endregion
     #region STANDART_EVENTS
-    void Start()
+    void Awake()
     {
         #region GET_DATA
         gunSprites = Resources.LoadAll<Sprite>(StringPathsInfo.GUNS_IMAGES_PATH);

@@ -60,6 +60,13 @@ public class ControllGunSystem : MonoBehaviour
             rbody.rotation -= deltaAngle;
         }
     }
+    public void RotateGun(float angleToSet)
+    {
+        if (angleToSet > minAngle && angleToSet < maxAngle)
+        {
+            rbody.rotation = angleToSet;
+        }
+    }
     #endregion
 #endif
 
