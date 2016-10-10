@@ -12,7 +12,7 @@ public class BulletMovementScript : MonoBehaviour
     private Rigidbody2D rbody;
     #endregion
     private float angle;
-
+    private float timeToDestroy = 10.0f;
     #region STANDART_EVENTS
     void Start()
     {
@@ -22,18 +22,30 @@ public class BulletMovementScript : MonoBehaviour
         {
             return;
         }
-        angle = from.GetComponent<Rigidbody2D>().rotation * Mathf.Deg2Rad;
+        StartCoroutine(CalculateAngle());
         if (from.GetComponent<BuildGunScript>())
         {
             speed = (float)from.GetComponent<BuildGunScript>().GunStat.Powerfull;
         }
+        StartCoroutine(DestroyThis());
     }
+    
     void Update()
     {
         Move();
     }
     #endregion
     #region LOGIC
+    IEnumerator DestroyThis()
+    {
+        yield return new WaitForSeconds(timeToDestroy);
+        Destroy(gameObject);
+    }
+    IEnumerator CalculateAngle()
+    {
+        angle = from.GetComponent<Rigidbody2D>().rotation * Mathf.Deg2Rad;
+        yield return null;
+    }
     private void Move()
     {
         rbody.velocity = new Vector2(speed * Mathf.Cos(angle), speed * Mathf.Sin(angle));

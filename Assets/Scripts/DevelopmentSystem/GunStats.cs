@@ -227,8 +227,17 @@ public class GunStats
                             if (this.minAngle == toCompare.minAngle)
                                 if (this.maxAngle == toCompare.maxAngle)
                                     if (this.gunType == toCompare.gunType)
-                                        if (this.gunName.Equals(toCompare.gunName))
+                                        if(this.gunName.Equals(toCompare.gunName))
                                             return true;
         return false;
+    }
+    public override int GetHashCode()
+    {
+        int toReturn = 0;
+        toReturn += ammoStats.AmmoSize;
+        toReturn += ammoStats.CurrentAmmo;
+        toReturn += ammoStats.DeltaAmmo;
+        toReturn += (int)gunType;
+        return toReturn;
     }
 }

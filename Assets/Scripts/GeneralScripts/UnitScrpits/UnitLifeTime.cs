@@ -7,6 +7,7 @@ public class UnitLifeTime : MonoBehaviour
     private DeathHandler deathHandler;
     private Animator animController;
     private MovementScript movement;
+    private float scaleAmount;
     void Start()
     {
         deathHandler = new DeathHandler();
@@ -14,6 +15,8 @@ public class UnitLifeTime : MonoBehaviour
         deathHandler.AddAction(delegate { PlayerStats.Current.IncreaseLevel(10); });
         animController = gameObject.GetComponent<Animator>();
         movement = gameObject.GetComponent<MovementScript>();
+        scaleAmount = transform.localScale.x;
+        
     }
     IEnumerator Death(string animationName)
     {
@@ -25,14 +28,17 @@ public class UnitLifeTime : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collisionToDetect)
     {
-        if (collisionToDetect.gameObject.tag.Equals(StringNamesInfo.BULLET_tag))
+        if (collisionToDetect.gameObject.CompareTag(StringNamesInfo.BULLET_tag))
         {
             deathHandler.OnDeath();
+            Destroy(collisionToDetect.gameObject);
             Destroy(gameObject);
         }
-        if (collisionToDetect.gameObject.tag.Equals(StringNamesInfo.GROUND_tag))
+        if (collisionToDetect.gameObject.CompareTag(StringNamesInfo.GROUND_tag))
         {
             StartCoroutine(Death(StringNamesInfo.EXPLODE_animation_name));
+            StartCoroutine(CameraShakingScript.Instance.ShakeCameraIEnumerator(scaleAmount));
+            GameManager.Instance.Health -= lifeCost;
         }
     }
 }

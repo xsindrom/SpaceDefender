@@ -5,13 +5,13 @@
         "currentAmmo": 300,
         "deltaAmmo": 1
     },
-    "attackRate": 0.9,
+    "attackRate": 0.225,
     "powerfull": 100.0,
     "minAngle": 30.0,
     "maxAngle": 150.0,
     "gunType": 1,
     "maxAmmoSize": 3000,
     "maxPowerFull": 1000.0,
-    "maxAttackRate": 0.1,
+    "maxAttackRate": 0.025,
     "levelToOpen": 3
 }

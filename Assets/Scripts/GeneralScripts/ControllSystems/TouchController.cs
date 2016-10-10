@@ -13,6 +13,7 @@ public class TouchController : MonoBehaviour
     #region STATES
     bool rotateLeft = false;
     bool rotateRight = false;
+    bool shootState = false;
     #endregion
     #region STANDART_EVENTS
     void Awake()
@@ -28,13 +29,17 @@ public class TouchController : MonoBehaviour
     }
     void Update()
     {
-        if (rotateLeft)
+        //if (rotateLeft)
+        //{
+        //    controllGun.RotateLeftGun();
+        //}
+        //if (rotateRight)
+        //{
+        //    controllGun.RotateRightGun();
+        //}
+        if (shootState)
         {
-            controllGun.RotateLeftGun();
-        }
-        if (rotateRight)
-        {
-            controllGun.RotateRightGun();
+            controllShoot.TimerForActions.CompleteAction();
         }
     }
     void Start()
@@ -68,9 +73,17 @@ public class TouchController : MonoBehaviour
     }
     #endregion
     #region SHOOT_EVENT
+    //public void Shoot()
+    //{
+    //    controllShoot.Shoot();
+    //}
     public void Shoot()
     {
-        controllShoot.Shoot();
+        shootState = true;
+    }
+    public void StopShoot()
+    {
+        shootState = false;
     }
     #endregion
     #endregion

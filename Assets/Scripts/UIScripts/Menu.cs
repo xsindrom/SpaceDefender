@@ -31,10 +31,16 @@ public class Menu : MonoBehaviour
     }
     #endregion
     #region STANDART_EVENTS
-    void Awake()
+    
+    void OnEnable()
     {
-        CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName);
-        CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH);
+        SceneManager.sceneLoaded += delegate { CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName); };
+        SceneManager.sceneLoaded += delegate { CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH); };
+    }
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= delegate { CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName); };
+        SceneManager.sceneLoaded -= delegate { CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH); };
     }
     #endregion
     #region LOGIC
@@ -96,6 +102,7 @@ public class Menu : MonoBehaviour
     {
         ScoreManager.Instance.Score = 0;
         GunStats.Instance.AmmoStats.CurrentAmmo = GunStats.Instance.AmmoStats.AmmoSize;
+        GameManager.Instance.Health = 100;
     }
     #endregion
 }

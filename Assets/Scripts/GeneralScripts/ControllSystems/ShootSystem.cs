@@ -49,11 +49,20 @@ public class ShootSystem : MonoBehaviour
             }
         }
     }
+    public Timer TimerForActions
+    {
+        get { return timerForActions; }
+    }
     #endregion
     #region LOGIC
     public void CreateInfoAboutShoot()
     {
         GUIManager.Instance.AmmoToSet = ammoStat.CurrentAmmo;
+    }
+    void Start()
+    {
+        timerForActions = new Timer(attackRate);
+        timerForActions.AddAction(Shoot);
     }
 #if UNITY_STANDALONE_WIN
     void Start()

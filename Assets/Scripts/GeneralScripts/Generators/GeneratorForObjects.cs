@@ -29,7 +29,7 @@ public class GeneratorForObjects : MonoBehaviour
     {
         for (int index = 0; index < SetAmountOfObjectsToGenerate(); index++)
         {
-            Instantiate(objectsToGenerate[Random.Range(0, objectsToGenerate.Length - 1)]);
+            Instantiate(objectsToGenerate[Random.Range(0, objectsToGenerate.Length)]);
         }
     }
     private int SetAmountOfObjectsToGenerate()

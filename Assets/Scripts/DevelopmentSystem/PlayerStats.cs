@@ -155,14 +155,7 @@ public class PlayerStats
         this.Experience = 0;
         this.scoreMultipler = scoreMultipler;
     }
-    public static PlayerStats Empty
-    {
-        get
-        {
-            PlayerStats emptyStats = new PlayerStats();
-            return emptyStats;
-        }
-    }
+    public readonly static PlayerStats Empty = new PlayerStats();
     public override bool Equals(object obj)
     {
         if (obj == null) { return false; }
@@ -176,6 +169,19 @@ public class PlayerStats
                             if (this.name.Equals(toCompare.name))
                                 return true;
         return false;
+    }
+    public override int GetHashCode()
+    {
+        int toReturn = 0;
+        foreach (char c in name)
+        {
+            toReturn += c;
+        }
+        toReturn += score;
+        toReturn += level;
+        toReturn += experience;
+        toReturn += scoreMultipler;
+        return toReturn;
     }
     #endregion
 

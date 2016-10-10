@@ -46,7 +46,6 @@ public class StartGameScript : MonoBehaviour
     {
         if(!GunStats.Instance.Equals(GunStats.Empty))
         {
-            LoadGame();
             if (!PlayerStats.Current.Equals(PlayerStats.Empty))
             {
                 Menu.Instance.StartGame();

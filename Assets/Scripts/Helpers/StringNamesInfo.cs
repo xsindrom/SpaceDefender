@@ -22,12 +22,14 @@ public static class StringNamesInfo
     public const string EXPLODE_animation_name = "Explode";
     //--F---
     //--G---
+    public const string GAMEMANAGER_name = "GameManager";
     public const string GROUND_tag = "Ground";
     public const string GUN_name = "Gun_";
     public const string GUNTYPESTAT_image_name = "GunTypeStatToFill";
     public const string GUNTYPESTAT_text_name = "GunTypeStatText";
     //--H---
     public const string HIDEPANEL_animation = "HidePanel";
+    public const string HEALTHINFO_tag = "HealthInfo";
     //--I---
     //--J---
     //--K---
