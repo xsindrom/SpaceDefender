@@ -17,15 +17,12 @@ public class LeaderBoardFillScript : MonoBehaviour
     public static JsonData jDataList;
     void InitJData()
     {
-        if (jDataList == null)
+        jDataList = new JsonData();
+        jDataList.SetJsonType(JsonType.Array);
+        string jString = File.ReadAllText(jsonName);
+        if (jString.Length != 0)
         {
-            jDataList = new JsonData();
-            jDataList.SetJsonType(JsonType.Array);
-            string jString = File.ReadAllText(jsonName);
-            if (jString.Length != 0)
-            {
-                jDataList = JsonMapper.ToObject(jString);
-            }
+            jDataList = JsonMapper.ToObject(jString);
         }
     }
     #endregion
@@ -43,23 +40,17 @@ public class LeaderBoardFillScript : MonoBehaviour
         childrenRecords = new GameObject[size];
         #endregion
         gameObject.SetRectTransformer(0.0f, -size * 0.05f, 1.0f, 1.0f);
-        
+
         for (int index = 0; index < size; index++)
         {
             leaders[index] = new PlayerStats(index, jsonName);
             childrenRecords[index] = Instantiate(prefabToInstatiate) as GameObject;
             #region FILL_DATA
-            FillText(0, (size-index).ToString(), childrenRecords[index]);
+            FillText(0, (index + 1).ToString(), childrenRecords[index]);
             FillText(1, leaders[index].Name, childrenRecords[index]);
             FillText(2, leaders[index].Score.ToString(), childrenRecords[index]);
             FillText(3, leaders[index].Level.ToString(), childrenRecords[index]);
             #endregion
-        }
-        ArrayList tmpRecords = new ArrayList(childrenRecords);
-        tmpRecords.Reverse();
-        for (int index = 0; index < tmpRecords.Count; index++ )
-        {
-            childrenRecords[index] = (GameObject)tmpRecords[index];
         }
         childrenRecords.SetParentToObjects(this.gameObject);
     }

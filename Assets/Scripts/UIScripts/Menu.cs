@@ -3,9 +3,12 @@ using UnityEngine.SceneManagement;
 using LitJson;
 using System.IO;
 using System.Collections;
-
+using System.Collections.Generic;
 public class Menu : MonoBehaviour
 {
+    #region Fields
+    public string path = "";
+    #endregion
     #region SINGLETON
     private static Menu instance;
     public static Menu Instance
@@ -42,6 +45,10 @@ public class Menu : MonoBehaviour
         SceneManager.sceneLoaded -= delegate { CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName); };
         SceneManager.sceneLoaded -= delegate { CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH); };
     }
+    void Awake()
+    {
+        path = Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName;
+    }
     #endregion
     #region LOGIC
     void CreateJsonFiles(string jsonName)
@@ -54,7 +61,6 @@ public class Menu : MonoBehaviour
     public void GoToMainMenu()
     {
         #region FILE_PROCESSING PART
-        string path = Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName;
         string jString = File.ReadAllText(path);
         JsonData jDataList = JsonMapper.ToObject(jString);
         if (jDataList == null)
@@ -63,20 +69,40 @@ public class Menu : MonoBehaviour
             jDataList.SetJsonType(JsonType.Array);
         }
         if (!jDataList.IsArray) { jDataList.SetJsonType(JsonType.Array); }
-        PlayerStats temp = new PlayerStats(jDataList.Count-1, path);
-        if (temp == null)
-        {
-            temp = PlayerStats.Current;
-            jDataList.Add(JsonMapper.ToObject(JsonUtility.ToJson(temp)));
-            File.WriteAllText(path, jDataList.ToJson());
-        }
-        if (temp.Score < PlayerStats.Current.Score)
-        {
-            jDataList.Add(JsonMapper.ToObject(JsonUtility.ToJson(PlayerStats.Current)));
-            File.WriteAllText(path, jDataList.ToJson());
-        }
+        WorkWithListPlayer(jDataList);
         #endregion
         OnSceneLeft(0);
+    }
+    
+    private void WorkWithListPlayer(JsonData jDataList)
+    {
+        List<PlayerStats> listPlayer = new List<PlayerStats>();
+        #region InitList
+        for (int index = 0; index < jDataList.Count; index++)
+        {
+            listPlayer.Add(new PlayerStats(index, path));
+        }
+        #endregion
+        if (listPlayer.Count == 0) { listPlayer.Add(PlayerStats.Current); }
+        #region ProcessList
+        for (int index = 0; index < listPlayer.Count; index++)
+        {
+            if (PlayerStats.Current.Score > listPlayer[index].Score)
+            {
+                listPlayer.Insert(index, PlayerStats.Current);
+                break;
+            }
+        }
+        #endregion
+        jDataList = new JsonData();
+        jDataList.SetJsonType(JsonType.Array);
+        #region TransfromListToJdataList
+        foreach (PlayerStats playerInList in listPlayer)
+        {
+            jDataList.Add(JsonMapper.ToObject(JsonUtility.ToJson(playerInList)));
+        }
+        #endregion
+        File.WriteAllText(path, jDataList.ToJson());
     }
     public void StartGame()
     {
