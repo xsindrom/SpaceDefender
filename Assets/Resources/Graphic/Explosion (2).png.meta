@@ -1,15 +1,13 @@
 fileFormatVersion: 2
-guid: e9d00fc13ed7d364a845ac306c613f7a
-timeCreated: 1476146375
+guid: 0fd62e9ab10e57b48adeb8ccd9d2144d
+timeCreated: 1476288048
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Explosion_0
-    21300002: Explosion_1
-    21300004: Explosion_2
-    21300006: Explosion_3
-    21300008: Explosion_5
-    21300010: Explosion_6
+    21300000: Explosion (2)_0
+    21300002: Explosion (2)_1
+    21300004: Explosion (2)_2
+    21300006: Explosion (2)_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -59,54 +57,54 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Explosion_0
+      name: Explosion (2)_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 480
-        width: 460
-        height: 460
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        y: 552
+        width: 300
+        height: 425
+      alignment: 9
+      pivot: {x: 0.6, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Explosion_2
-      rect:
-        serializedVersion: 2
-        x: 480
-        y: 480
-        width: 460
-        height: 460
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Explosion_5
+      name: Explosion (2)_1
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 460
-        height: 460
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        y: 58
+        width: 435
+        height: 425
+      alignment: 9
+      pivot: {x: 0.55, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Explosion_6
+      name: Explosion (2)_2
       rect:
         serializedVersion: 2
         x: 480
-        y: 0
-        width: 460
-        height: 460
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        y: 50
+        width: 440
+        height: 425
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Explosion (2)_3
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 500
+        width: 225
+        height: 207
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

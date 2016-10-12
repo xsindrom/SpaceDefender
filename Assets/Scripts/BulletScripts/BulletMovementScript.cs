@@ -12,7 +12,7 @@ public class BulletMovementScript : MonoBehaviour
     private Rigidbody2D rbody;
     #endregion
     private float angle;
-    private float timeToDestroy = 10.0f;
+    private float timeToDestroy = 5.0f;
     #region STANDART_EVENTS
     void Start()
     {

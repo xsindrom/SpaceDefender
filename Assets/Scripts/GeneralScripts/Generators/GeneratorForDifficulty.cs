@@ -12,26 +12,48 @@ public class GeneratorForDifficulty : MonoBehaviour
     public float minTime = 0.0f;
     private GeneratorForObjects generator;
     private Timer timerForActions;
+    private int playerLevel;
     #endregion
     #region STANDART_EVENTS
+    void Awake()
+    {
+        playerLevel = PlayerStats.Current.Level;
+    }
     void Start()
     {
         generator = gameObject.GetComponent<GeneratorForObjects>();
+        generator.minAmount = 1;
+        generator.maxAmount = playerLevel;
         timerForActions = new Timer(periodOfTime);
-        timerForActions.AddAction(IncreaseDifficulty);
+        timerForActions.AddAction(IncreaseDifficultyTime);
+        timerForActions.AddAction(IncreaseDifficultyAmount);
     }
     void Update()
     {
         timerForActions.CompleteAction();
+        if (playerLevel < PlayerStats.Current.Level)
+        {
+            IncreaseDifficultyAmount();
+            playerLevel = PlayerStats.Current.Level;
+        }
+        else
+        {
+            return;
+        }
     }
     #endregion
     #region LOGIC
-    private void IncreaseDifficulty()
+    private void IncreaseDifficultyTime()
     {
         if (generator.timeToGenerate > minTime)
         {
             generator.timeToGenerate -= deltaDecreaseTime;
         }
+    }
+    private void IncreaseDifficultyAmount()
+    {
+        generator.minAmount++;
+        generator.maxAmount++;
     }
     #endregion
 }

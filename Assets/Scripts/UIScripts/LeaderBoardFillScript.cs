@@ -15,6 +15,7 @@ public class LeaderBoardFillScript : MonoBehaviour
     #region FILE_PROCESSING_PART
     public static string jsonName;
     public static JsonData jDataList;
+    public static int[] fontSize = null;
     void InitJData()
     {
         jDataList = new JsonData();
@@ -41,6 +42,22 @@ public class LeaderBoardFillScript : MonoBehaviour
         #endregion
         gameObject.SetRectTransformer(0.0f, -size * 0.05f, 1.0f, 1.0f);
 
+        #region SetFontSize_to_Prefab
+        Text[] childrenOfPrefab = new Text[prefabToInstatiate.GetChilds().Length];
+        childrenOfPrefab.CacheComponents<Text>(prefabToInstatiate.GetChilds());
+        if (fontSize == null)
+        {
+            fontSize = new int[childrenOfPrefab.Length];
+            for (int index = childrenOfPrefab.Length - 1; index > -1; index--)
+            {
+                fontSize[index] = childrenOfPrefab[index].resizeTextMaxSize;
+            }
+        }
+        for (int index = childrenOfPrefab.Length - 1; index > -1; index--)
+        {
+            childrenOfPrefab[index].resizeTextMaxSize = (int)(fontSize[index]*SetCanvasScaler.scale);
+        }
+        #endregion
         for (int index = 0; index < size; index++)
         {
             leaders[index] = new PlayerStats(index, jsonName);

@@ -7,7 +7,7 @@ public class SetCanvasScaler : MonoBehaviour
 {
     public CanvasScaler thisCanvasScaler = null;
     public Component[] childrenComponents;
-    public float scale;
+    public static float scale;
     public static int[] fontSize = null;
     void OnEnable()
     {

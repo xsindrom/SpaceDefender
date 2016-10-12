@@ -47,7 +47,7 @@ public class PlayerStats
         set
         {
             experience = value;
-            if (experience == maxExperience)
+            if (experience >= maxExperience)
             {
                 Level++;
             }

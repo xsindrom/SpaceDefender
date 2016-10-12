@@ -16,7 +16,11 @@ public class GameManager : MonoBehaviour
             {
                 if (animController)
                 {
-                    animController.ShowPanel();
+                    if (PanelAnimation.isPlayed)
+                    {
+                        PanelAnimation.HideCurrentPanel();
+                    }
+                    animController.ShowPanel();    
                     Time.timeScale = 0.0f;
                 }
             }

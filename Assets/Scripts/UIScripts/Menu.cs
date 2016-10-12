@@ -7,7 +7,8 @@ using System.Collections.Generic;
 public class Menu : MonoBehaviour
 {
     #region Fields
-    public string path = "";
+    public string pathLeaders = "";
+    public string pathCurrent = "";
     #endregion
     #region SINGLETON
     private static Menu instance;
@@ -47,7 +48,8 @@ public class Menu : MonoBehaviour
     }
     void Awake()
     {
-        path = Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName;
+        pathLeaders = Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName;
+        pathCurrent = Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH;
     }
     #endregion
     #region LOGIC
@@ -61,15 +63,7 @@ public class Menu : MonoBehaviour
     public void GoToMainMenu()
     {
         #region FILE_PROCESSING PART
-        string jString = File.ReadAllText(path);
-        JsonData jDataList = JsonMapper.ToObject(jString);
-        if (jDataList == null)
-        {
-            jDataList = new JsonData();
-            jDataList.SetJsonType(JsonType.Array);
-        }
-        if (!jDataList.IsArray) { jDataList.SetJsonType(JsonType.Array); }
-        WorkWithListPlayer(jDataList);
+        SaveLeader();
         #endregion
         OnSceneLeft(0);
     }
@@ -80,7 +74,7 @@ public class Menu : MonoBehaviour
         #region InitList
         for (int index = 0; index < jDataList.Count; index++)
         {
-            listPlayer.Add(new PlayerStats(index, path));
+            listPlayer.Add(new PlayerStats(index, pathLeaders));
         }
         #endregion
         if (listPlayer.Count == 0) { listPlayer.Add(PlayerStats.Current); }
@@ -93,6 +87,11 @@ public class Menu : MonoBehaviour
                 break;
             }
         }
+        //---Save only 10 players in list---
+        if (listPlayer.Count > 10)
+        {
+            listPlayer.RemoveRange(10, listPlayer.Count-10);
+        }
         #endregion
         jDataList = new JsonData();
         jDataList.SetJsonType(JsonType.Array);
@@ -102,7 +101,7 @@ public class Menu : MonoBehaviour
             jDataList.Add(JsonMapper.ToObject(JsonUtility.ToJson(playerInList)));
         }
         #endregion
-        File.WriteAllText(path, jDataList.ToJson());
+        File.WriteAllText(pathLeaders, jDataList.ToJson());
     }
     public void StartGame()
     {
@@ -111,16 +110,17 @@ public class Menu : MonoBehaviour
     }
     public void Quit()
     {
-        PlayerStats.Current.SavePlayerStats(Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH);
+        PlayerStats.Current.SavePlayerStats(pathCurrent);
         Application.Quit();
     }
     public void RestartScene()
     {
+        SaveLeader();
         OnSceneLeft(SceneManager.GetActiveScene().buildIndex);
     }
     public void OnSceneLeft(int index)
     {
-        PlayerStats.Current.SavePlayerStats(Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH);
+        PlayerStats.Current.SavePlayerStats(pathCurrent);
         SetValuesToNull();
         SceneManager.LoadScene(index);
     }
@@ -129,6 +129,18 @@ public class Menu : MonoBehaviour
         ScoreManager.Instance.Score = 0;
         GunStats.Instance.AmmoStats.CurrentAmmo = GunStats.Instance.AmmoStats.AmmoSize;
         GameManager.Instance.Health = 100;
+    }
+    public void SaveLeader()
+    {
+        string jString = File.ReadAllText(pathLeaders);
+        JsonData jDataList = JsonMapper.ToObject(jString);
+        if (jDataList == null)
+        {
+            jDataList = new JsonData();
+            jDataList.SetJsonType(JsonType.Array);
+        }
+        if (!jDataList.IsArray) { jDataList.SetJsonType(JsonType.Array); }
+        WorkWithListPlayer(jDataList);
     }
     #endregion
 }

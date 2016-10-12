@@ -19,7 +19,8 @@ public static class StringNamesInfo
     public const string EFFECT_tag = "Effect";
     public const string EFFECT_group = "EffectGroup";
     public const string EVENT_manager_name = "EventManager";
-    public const string EXPLODE_animation_name = "Explode";
+    public const string EXPLODE_onGround_animation_name = "ExplodeOnGround";
+    public const string EXPLODE_inAir_animation_name = "ExplodeInAir";
     //--F---
     //--G---
     public const string GAMEMANAGER_name = "GameManager";
