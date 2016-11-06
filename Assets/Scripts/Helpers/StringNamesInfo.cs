@@ -15,6 +15,7 @@ public static class StringNamesInfo
     public const string BULLET_tag = "Bullet";
     //--C---
     //--D---
+    public const string DESTROYERFORMETEORITSINFO_tag = "DestroyerForMeteoritsInfo";
     //--E---
     public const string EFFECT_tag = "Effect";
     public const string EFFECT_group = "EffectGroup";
@@ -38,8 +39,10 @@ public static class StringNamesInfo
     public const string LEVELINFO_tag = "LevelInfo";
     //--M---
     public const string MENU_name = "Menu";
+    public const string METEORIT_tag = "Meteorit";
     public const string MUSIC_tag = "Music";
     public const string MUSIC_group = "MusicGroup";
+    public const string MONEYINFO_tag = "MoneyInfo";
     //--N---
     public const string PLAYERNAMEINFO_tag = "NameInfo";
     //--O---
@@ -48,9 +51,13 @@ public static class StringNamesInfo
     public const string POWERFULLSTAT_text_name = "PowerFullStatText";
     //--Q---
     //--R---
+    public const string RESTOREAMMOINFO_tag = "RestoreAmmoInfo";
+    public const string RETURNTOLIFEINFO_tag = "ReturnToLifeInfo";
+    public const string ROTATEGUNCONTROLLER_name = "RotateController";
     //--S---
     public const string SCOREINFO_tag = "ScoreInfo";
     public const string SCOREMULTIPLER_tag = "ScoreMultiplerInfo";
+    public const string SHOPMANAGER_name = "ShopManager";
     public const string SHOWPANEL_animation = "ShowPanel";
     //--T---
     //--U---

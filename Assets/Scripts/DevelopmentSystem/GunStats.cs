@@ -10,6 +10,8 @@ public class GunStats
     public enum GunTypeEnum { NotIdentified, Weak, Normal, Strong, Ultimate }
     #region FIELDS
     [SerializeField]
+    private int id;
+    [SerializeField]
     private string gunName;
     [SerializeField]
     private GunTypeEnum gunType;
@@ -27,8 +29,6 @@ public class GunStats
     //--AmmoStat---
     [SerializeField]
     private AmmoStat ammoStats;
-    //--Read From---
-    [SerializeField]
     #endregion
     
     #region PROPERTIES
@@ -37,11 +37,7 @@ public class GunStats
         get { return gunName; }
         private set
         {
-            gunName = "empty";
-            if (value != null)
-            {
-                gunName = value;
-            }
+            gunName = value;
         }
     }
     public AmmoStat AmmoStats
@@ -102,6 +98,14 @@ public class GunStats
             gunType = (value != GunTypeEnum.NotIdentified) ? value : GunTypeEnum.NotIdentified;
         }
     }
+    public int Id
+    {
+        get { return id; }
+        private set
+        {
+            id = value;
+        }
+    }
     #endregion
     #region SINGLETON
     [NonSerialized]
@@ -157,6 +161,27 @@ public class GunStats
     #endregion
     #region CONSTRUCTORS
     public GunStats() { }
+    public GunStats(GunStats gunStat)
+    {
+        if (gunStat == null)
+        {
+            return;
+        }
+        this.id = gunStat.id;
+        this.gunName = gunStat.gunName;
+        this.AmmoStats.AmmoSize = gunStat.AmmoStats.AmmoSize;
+        this.AmmoStats.CurrentAmmo = gunStat.AmmoStats.CurrentAmmo;
+        this.AmmoStats.DeltaAmmo = gunStat.AmmoStats.DeltaAmmo;
+        this.attackRate = gunStat.attackRate;
+        this.minAngle = gunStat.minAngle;
+        this.maxAngle = gunStat.maxAngle;
+        this.powerfull = gunStat.powerfull;
+        this.gunType = gunStat.gunType;
+        this.maxAmmoSize = gunStat.maxAmmoSize;
+        this.maxPowerFull = gunStat.maxPowerFull;
+        this.maxAttackRate = gunStat.maxAttackRate;
+        this.levelToOpen = gunStat.levelToOpen;
+    }
     public GunStats(string jsonName) { LoadDataFromJSON(jsonName); }
     public static GunStats Empty
     {
@@ -181,19 +206,26 @@ public class GunStats
         if (gunStatJsonString.Length == 0) { return; }
         #endregion
         #region PARSE_DATA
-        this.GunName = JsonUtility.FromJson<GunStats>(gunStatJsonString).GunName;
-        this.AmmoStats.AmmoSize = JsonUtility.FromJson<GunStats>(gunStatJsonString).AmmoStats.AmmoSize;
-        this.AmmoStats.CurrentAmmo = JsonUtility.FromJson<GunStats>(gunStatJsonString).AmmoStats.CurrentAmmo;
-        this.AmmoStats.DeltaAmmo = JsonUtility.FromJson<GunStats>(gunStatJsonString).AmmoStats.DeltaAmmo;
-        this.AttackRate = JsonUtility.FromJson<GunStats>(gunStatJsonString).AttackRate;
-        this.MinAngle = JsonUtility.FromJson<GunStats>(gunStatJsonString).MinAngle;
-        this.MaxAngle = JsonUtility.FromJson<GunStats>(gunStatJsonString).MaxAngle;
-        this.Powerfull = JsonUtility.FromJson<GunStats>(gunStatJsonString).Powerfull;
-        this.GunType = JsonUtility.FromJson<GunStats>(gunStatJsonString).GunType;
-        this.maxAmmoSize = JsonUtility.FromJson<GunStats>(gunStatJsonString).MaxAmmoSize;
-        this.maxPowerFull = JsonUtility.FromJson<GunStats>(gunStatJsonString).MaxPowerFull;
-        this.maxAttackRate = JsonUtility.FromJson<GunStats>(gunStatJsonString).MaxAttackRate;
-        this.levelToOpen = JsonUtility.FromJson<GunStats>(gunStatJsonString).LevelToOpen;
+        GunStats gunStat = JsonUtility.FromJson<GunStats>(gunStatJsonString);
+        if (gunStat.Equals(GunStats.Empty))
+        {
+            return;
+        }
+        this.id = gunStat.Id;
+        this.GunName = gunStat.GunName;
+        this.AmmoStats.AmmoSize = gunStat.AmmoStats.AmmoSize;
+        this.AmmoStats.CurrentAmmo = gunStat.AmmoStats.CurrentAmmo;
+        this.AmmoStats.DeltaAmmo = gunStat.AmmoStats.DeltaAmmo;
+        this.AttackRate = gunStat.AttackRate;
+        this.MinAngle = gunStat.MinAngle;
+        this.MaxAngle = gunStat.MaxAngle;
+        this.Powerfull = gunStat.Powerfull;
+        this.GunType = gunStat.GunType;
+        this.maxAmmoSize = gunStat.MaxAmmoSize;
+        this.maxPowerFull = gunStat.MaxPowerFull;
+        this.maxAttackRate = gunStat.MaxAttackRate;
+        this.levelToOpen = gunStat.LevelToOpen;
+        
         #endregion
     }
     private void SaveDataToJSON(string jsonName)
@@ -227,7 +259,6 @@ public class GunStats
                             if (this.minAngle == toCompare.minAngle)
                                 if (this.maxAngle == toCompare.maxAngle)
                                     if (this.gunType == toCompare.gunType)
-                                        if(this.gunName.Equals(toCompare.gunName))
                                             return true;
         return false;
     }

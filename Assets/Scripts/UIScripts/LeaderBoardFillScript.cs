@@ -15,7 +15,6 @@ public class LeaderBoardFillScript : MonoBehaviour
     #region FILE_PROCESSING_PART
     public static string jsonName;
     public static JsonData jDataList;
-    public static int[] fontSize = null;
     void InitJData()
     {
         jDataList = new JsonData();
@@ -45,17 +44,9 @@ public class LeaderBoardFillScript : MonoBehaviour
         #region SetFontSize_to_Prefab
         Text[] childrenOfPrefab = new Text[prefabToInstatiate.GetChilds().Length];
         childrenOfPrefab.CacheComponents<Text>(prefabToInstatiate.GetChilds());
-        if (fontSize == null)
+        foreach (Text textComponent in childrenOfPrefab)
         {
-            fontSize = new int[childrenOfPrefab.Length];
-            for (int index = childrenOfPrefab.Length - 1; index > -1; index--)
-            {
-                fontSize[index] = childrenOfPrefab[index].resizeTextMaxSize;
-            }
-        }
-        for (int index = childrenOfPrefab.Length - 1; index > -1; index--)
-        {
-            childrenOfPrefab[index].resizeTextMaxSize = (int)(fontSize[index]*SetCanvasScaler.scale);
+            textComponent.resizeTextMaxSize = (int)(SetCanvasScaler.baseFont * SetCanvasScaler.scale);
         }
         #endregion
         for (int index = 0; index < size; index++)
@@ -64,9 +55,9 @@ public class LeaderBoardFillScript : MonoBehaviour
             childrenRecords[index] = Instantiate(prefabToInstatiate) as GameObject;
             #region FILL_DATA
             FillText(0, (index + 1).ToString(), childrenRecords[index]);
-            FillText(1, leaders[index].Name, childrenRecords[index]);
-            FillText(2, leaders[index].Score.ToString(), childrenRecords[index]);
-            FillText(3, leaders[index].Level.ToString(), childrenRecords[index]);
+            FillText(1, leaders[index].NameLeader, childrenRecords[index]);
+            FillText(2, leaders[index].ScoreLeader.ToString(), childrenRecords[index]);
+            FillText(3, leaders[index].LevelLeader.ToString(), childrenRecords[index]);
             #endregion
         }
         childrenRecords.SetParentToObjects(this.gameObject);

@@ -26,12 +26,18 @@ public class GeneralObject : MonoBehaviour
     private void SetGravityScale()
     {
         gravityScale = Random.Range(minGravityScale, maxGravityScale);
-        rbody.gravityScale = gravityScale;
+        if (rbody)
+        {
+            rbody.gravityScale = gravityScale;
+        }
     }
     private void SetPosition()
     {
         position = new Vector2(Random.Range(minXPosition, maxXPosition), Random.Range(minYPosition, maxYPosition));
-        rbody.position = position;
+        if (rbody)
+        {
+            rbody.position = position;
+        }
     }
    
 }

@@ -38,27 +38,30 @@ public class Menu : MonoBehaviour
     
     void OnEnable()
     {
-        SceneManager.sceneLoaded += delegate { CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName); };
-        SceneManager.sceneLoaded += delegate { CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH); };
+        SceneManager.sceneLoaded += delegate { (Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName).CreateFileAsDirectedByPath(); };
+        SceneManager.sceneLoaded += delegate { (Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH).CreateFileAsDirectedByPath(); };
     }
     void OnDisable()
     {
-        SceneManager.sceneLoaded -= delegate { CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName); };
-        SceneManager.sceneLoaded -= delegate { CreateJsonFiles(Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH); };
+        SceneManager.sceneLoaded -= delegate { (Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName).CreateFileAsDirectedByPath(); };
+        SceneManager.sceneLoaded -= delegate { (Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH).CreateFileAsDirectedByPath(); };
     }
     void Awake()
     {
         pathLeaders = Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName;
         pathCurrent = Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH;
     }
+    void Start()
+    {
+        LoadGame();
+    }
     #endregion
     #region LOGIC
-    void CreateJsonFiles(string jsonName)
+    public void LoadGame()
     {
-        if (!File.Exists(jsonName))
-        {
-            File.Create(jsonName);
-        }
+        string jString = File.ReadAllText(pathCurrent);
+        if (jString.Length == 0) { return; }
+        PlayerStats.Current = new PlayerStats(JsonUtility.FromJson<PlayerStats>(jString));
     }
     public void GoToMainMenu()
     {
@@ -87,7 +90,6 @@ public class Menu : MonoBehaviour
                 break;
             }
         }
-        //---Save only 10 players in list---
         if (listPlayer.Count > 10)
         {
             listPlayer.RemoveRange(10, listPlayer.Count-10);
@@ -120,13 +122,13 @@ public class Menu : MonoBehaviour
     }
     public void OnSceneLeft(int index)
     {
-        PlayerStats.Current.SavePlayerStats(pathCurrent);
         SetValuesToNull();
+        PlayerStats.Current.SavePlayerStats(pathCurrent);
         SceneManager.LoadScene(index);
     }
     public void SetValuesToNull()
     {
-        ScoreManager.Instance.Score = 0;
+        PlayerStats.Current.Score = 0;
         GunStats.Instance.AmmoStats.CurrentAmmo = GunStats.Instance.AmmoStats.AmmoSize;
         GameManager.Instance.Health = 100;
     }

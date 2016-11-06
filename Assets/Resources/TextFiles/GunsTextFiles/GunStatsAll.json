@@ -1,0 +1,182 @@
+﻿[
+    {
+        "id": 0,
+        "gunName": "Gun_0",
+        "ammoStats": {
+            "ammoSize": 100,
+            "currentAmmo": 100,
+            "deltaAmmo": 1
+        },
+        "attackRate": 0.25,
+        "powerfull": 100.0,
+        "minAngle": 45.0,
+        "maxAngle": 135.0,
+        "gunType": 1,
+        "maxAmmoSize": 3000,
+        "maxPowerFull": 1000.0,
+        "maxAttackRate": 0.025,
+        "levelToOpen": 0
+    },
+    {
+        "id": 1,
+        "gunName": "Gun_1",
+        "ammoStats": {
+            "ammoSize": 300,
+            "currentAmmo": 300,
+            "deltaAmmo": 1
+        },
+        "attackRate": 0.225,
+        "powerfull": 100.0,
+        "minAngle": 30.0,
+        "maxAngle": 150.0,
+        "gunType": 1,
+        "maxAmmoSize": 3000,
+        "maxPowerFull": 1000.0,
+        "maxAttackRate": 0.025,
+        "levelToOpen": 3
+    },
+    {
+        "id": 2,
+        "gunName": "Gun_2",
+        "ammoStats": {
+            "ammoSize": 600,
+            "currentAmmo": 600,
+            "deltaAmmo": 1
+        },
+        "attackRate": 0.2,
+        "powerfull": 100.0,
+        "minAngle": 30.0,
+        "maxAngle": 150.0,
+        "gunType": 1,
+        "maxAmmoSize": 3000,
+        "maxPowerFull": 1000.0,
+        "maxAttackRate": 0.025,
+        "levelToOpen": 6
+    },
+    {
+        "id": 3,
+        "gunName": "Gun_3",
+        "ammoStats": {
+            "ammoSize": 900,
+            "currentAmmo": 900,
+            "deltaAmmo": 2
+        },
+        "attackRate": 0.175,
+        "powerfull": 200.0,
+        "minAngle": 15.0,
+        "maxAngle": 165.0,
+        "gunType": 2,
+        "maxAmmoSize": 3000,
+        "maxPowerFull": 1000.0,
+        "maxAttackRate": 0.025,
+        "levelToOpen": 9
+    },
+    {
+        "id": 4,
+        "gunName": "Gun_4",
+        "ammoStats": {
+            "ammoSize": 1200,
+            "currentAmmo": 1200,
+            "deltaAmmo": 2
+        },
+        "attackRate": 0.150,
+        "powerfull": 200.0,
+        "minAngle": 15.0,
+        "maxAngle": 165.0,
+        "gunType": 2,
+        "maxAmmoSize": 3000,
+        "maxPowerFull": 1000.0,
+        "maxAttackRate": 0.025,
+        "levelToOpen": 12
+    },
+    {
+        "id": 5,
+        "gunName": "Gun_5",
+        "ammoStats": {
+            "ammoSize": 1500,
+            "currentAmmo": 1500,
+            "deltaAmmo": 2
+        },
+        "attackRate": 0.125,
+        "powerfull": 200.0,
+        "minAngle": 15.0,
+        "maxAngle": 165.0,
+        "gunType": 2,
+        "maxAmmoSize": 3000,
+        "maxPowerFull": 1000.0,
+        "maxAttackRate": 0.025,
+        "levelToOpen": 15
+    },
+    {
+        "id": 6,
+        "gunName": "Gun_6",
+        "ammoStats": {
+            "ammoSize": 1800,
+            "currentAmmo": 1800,
+            "deltaAmmo": 3
+        },
+        "attackRate": 0.100,
+        "powerfull": 500.0,
+        "minAngle": 15.0,
+        "maxAngle": 165.0,
+        "gunType": 3,
+        "maxAmmoSize": 3000,
+        "maxPowerFull": 1000.0,
+        "maxAttackRate": 0.025,
+        "levelToOpen": 18
+    },
+    {
+        "id": 7,
+        "gunName": "Gun_7",
+        "ammoStats": {
+            "ammoSize": 2100,
+            "currentAmmo": 2100,
+            "deltaAmmo": 3
+        },
+        "attackRate": 0.075,
+        "powerfull": 500.0,
+        "minAngle": 15.0,
+        "maxAngle": 165.0,
+        "gunType": 3,
+        "maxAmmoSize": 3000,
+        "maxPowerFull": 1000.0,
+        "maxAttackRate": 0.025,
+        "levelToOpen": 21
+    },
+    {
+        "id": 8,
+        "gunName": "Gun_8",
+        "ammoStats": {
+            "ammoSize": 2400,
+            "currentAmmo": 2400,
+            "deltaAmmo": 3
+        },
+        "attackRate": 0.05,
+        "powerfull": 500.0,
+        "minAngle": 15.0,
+        "maxAngle": 165.0,
+        "gunType": 3,
+        "maxAmmoSize": 3000,
+        "maxPowerFull": 1000.0,
+        "maxAttackRate": 0.025,
+        "levelToOpen": 24
+    },
+    {
+        "id": 9,
+        "gunName": "Gun_9",
+        "ammoStats": {
+            "ammoSize": 10000,
+            "currentAmmo": 10000,
+            "deltaAmmo": 4
+        },
+        "attackRate": 0.025,
+        "powerfull": 1000.0,
+        "minAngle": 0.0,
+        "maxAngle": 180.0,
+        "gunType": 4,
+        "maxAmmoSize": 3000,
+        "maxPowerFull": 1000.0,
+        "maxAttackRate": 0.025,
+        "levelToOpen": 30
+    }
+]

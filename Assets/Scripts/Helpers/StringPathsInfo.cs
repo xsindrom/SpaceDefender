@@ -12,8 +12,11 @@ public static class StringPathsInfo
     //--E---
     //--F---
     //--G---
+    public const string GUNS_base_IMAGES_PATH = "Graphic/GunsImages/BaseImages/";
+    public const string GUNS_barrel_IMAGES_PATH = "Graphic/GunsImages/BarrelImages/";
     public const string GUNS_TEXTFILES_PATH = "TextFiles/GunsTextFiles/";
-    public const string GUNS_IMAGES_PATH = "Graphic/GunsImages/";
+    public const string GUNS_TEXTFILES_ALL_PATH = "TextFiles/GunsTextFiles/GunStatsAll.json";
+    public const string GUNS_IMAGES_PATH = "Graphic/GunsImages/Guns/";
     //--H---
     //--I---
     //--J---
@@ -29,6 +32,7 @@ public static class StringPathsInfo
     //--R---
     public const string RESOURCES_PATH = "Assets/Resources/";
     //--S---
+    public const string SETTING_PATH = "/ConfigSettings.json";
     //--T---
     public const string TEXTFILES_PATH = "TextFiles/";
     //--U---

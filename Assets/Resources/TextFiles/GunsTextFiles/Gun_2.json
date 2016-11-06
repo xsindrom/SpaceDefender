@@ -1,4 +1,5 @@
 {
+	"id": 2,
     "gunName": "Gun_2",
     "ammoStats": {
         "ammoSize": 600,

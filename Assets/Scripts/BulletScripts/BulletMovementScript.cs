@@ -9,14 +9,12 @@ public class BulletMovementScript : MonoBehaviour
     #endregion
     #region FIELDS_TO_CACHE
     private GameObject from;
-    private Rigidbody2D rbody;
     #endregion
     private float angle;
     private float timeToDestroy = 5.0f;
     #region STANDART_EVENTS
     void Start()
     {
-        rbody = gameObject.GetComponent<Rigidbody2D>();
         from = GameObject.Find(nameFrom);
         if (from == null)
         {
@@ -43,12 +41,13 @@ public class BulletMovementScript : MonoBehaviour
     }
     IEnumerator CalculateAngle()
     {
-        angle = from.GetComponent<Rigidbody2D>().rotation * Mathf.Deg2Rad;
+        angle = from.GetComponent<Rigidbody2D>().rotation;
+        transform.Rotate(new Vector3(0.0f, 0.0f, angle - 90.0f));
         yield return null;
     }
     private void Move()
     {
-        rbody.velocity = new Vector2(speed * Mathf.Cos(angle), speed * Mathf.Sin(angle));
+        transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
     #endregion
 }

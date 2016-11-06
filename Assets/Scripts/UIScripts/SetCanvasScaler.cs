@@ -8,7 +8,8 @@ public class SetCanvasScaler : MonoBehaviour
     public CanvasScaler thisCanvasScaler = null;
     public Component[] childrenComponents;
     public static float scale;
-    public static int[] fontSize = null;
+    public static int[][] fontSize = null;
+    public static int baseFont = 40;
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoad;
@@ -17,23 +18,27 @@ public class SetCanvasScaler : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoad;
     }
-    void OnSceneLoad(Scene scene,LoadSceneMode mode)
+    void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
+        if (fontSize == null)
+        {
+            fontSize = new int[SceneManager.sceneCountInBuildSettings][];
+        }
         thisCanvasScaler = gameObject.GetComponent<CanvasScaler>();
         thisCanvasScaler.referenceResolution = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
         childrenComponents = gameObject.GetComponentsInChildren(typeof(Text), true);
         scale = gameObject.transform.localScale.x;
-        if (fontSize == null)
+        if (fontSize[SceneManager.GetActiveScene().buildIndex] == null)
         {
-            fontSize = new int[childrenComponents.Length];
-            for (int index = fontSize.Length - 1; index > -1; index-- )
+            fontSize[SceneManager.GetActiveScene().buildIndex] = new int[childrenComponents.Length];
+            for (int index = childrenComponents.Length - 1; index >= 0; index--)
             {
-                fontSize[index] = ((Text)childrenComponents[index]).resizeTextMaxSize;
+                fontSize[SceneManager.GetActiveScene().buildIndex][index] = ((Text)childrenComponents[index]).resizeTextMaxSize;
             }
         }
-        for (int index = childrenComponents.Length - 1; index > -1; index--)
+        for (int index = childrenComponents.Length - 1; index >= 0; index--)
         {
-            ((Text)childrenComponents[index]).resizeTextMaxSize = (int)(fontSize[index] * scale);
+            ((Text)childrenComponents[index]).resizeTextMaxSize = (int)(fontSize[SceneManager.GetActiveScene().buildIndex][index] * scale);
         }
     }
 }

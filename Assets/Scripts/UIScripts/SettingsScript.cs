@@ -1,26 +1,43 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 using System.Collections;
 
 public class SettingsScript : MonoBehaviour
 {
     #region FIELDS
-    [SerializeField]
-    private Slider musicSoundSlider;
-    [SerializeField]
-    private Slider effectSoundSlider;
+    private Slider musicSoundSlider = null;
+    private Slider effectSoundSlider = null;
 
-    [SerializeField]
     private GameObject[] musicSoundSourceObjects;
-    [SerializeField]
     private GameObject[] effectSoundSourceObjects;
 
-    [SerializeField]
     private AudioSource[] musicSoundSources;
-    [SerializeField]
     private AudioSource[] effectSoundSources;
+    [SerializeField]
+    private static float effectVolume = 1.0f;
+    [SerializeField]
+    private static float musicVolume = 1.0f;
     #endregion
     #region STANDART_EVENTS
+    void Awake()
+    {
+        if (effectVolume != 1.0f)
+        {
+            if (effectSoundSlider)
+            {
+                effectSoundSlider.value = effectVolume;
+            }
+        }
+        if (musicVolume != 1.0f)
+        {
+            if (musicSoundSlider)
+            {
+                musicSoundSlider.value = musicVolume;
+            }
+        }
+    }
+    
     void Start()
     {
         #region FIND_OBJECTS
@@ -32,7 +49,18 @@ public class SettingsScript : MonoBehaviour
         {
             musicSoundSources = new AudioSource[musicSoundSourceObjects.Length];
             musicSoundSources.CacheComponents<AudioSource>(musicSoundSourceObjects);
-            musicSoundSlider.onValueChanged.AddListener(delegate { OnValueChange(musicSoundSlider, musicSoundSources); });
+            if (musicSoundSlider)
+            {
+                musicSoundSlider.onValueChanged.AddListener(delegate { OnValueChange(musicSoundSlider, musicSoundSources); });
+                musicSoundSlider.onValueChanged.AddListener(delegate { musicVolume = musicSoundSlider.value; });
+            }
+            else
+            {
+                foreach (var music in musicSoundSources)
+                {
+                    music.volume = musicVolume;
+                }
+            }
         }
         #endregion
         #region SET_EFFECT_SETTINGS
@@ -40,7 +68,18 @@ public class SettingsScript : MonoBehaviour
         {
             effectSoundSources = new AudioSource[effectSoundSourceObjects.Length];
             effectSoundSources.CacheComponents<AudioSource>(effectSoundSourceObjects);
-            effectSoundSlider.onValueChanged.AddListener(delegate { OnValueChange(effectSoundSlider, effectSoundSources); });
+            if (effectSoundSlider)
+            {
+                effectSoundSlider.onValueChanged.AddListener(delegate { OnValueChange(effectSoundSlider, effectSoundSources); });
+                effectSoundSlider.onValueChanged.AddListener(delegate { effectVolume = effectSoundSlider.value; });
+            }
+            else
+            {
+                foreach (var effect in effectSoundSources)
+                {
+                    effect.volume = effectVolume;
+                }
+            }
         }
         #endregion
     }

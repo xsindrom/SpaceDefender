@@ -23,7 +23,13 @@ public static class MyExtensionMethods
         rectTransformer.offsetMin = new Vector2(0.0f, 0.0f);
         rectTransformer.offsetMax = new Vector2(0.0f, 0.0f);
     }
-    public static void SetSprite(this GameObject whereToget, Sprite spriteToSet)
+    public static void SetRectOffset(this RectTransform whereToSet, Vector2 offsetMin, Vector2 offsetMax)
+    {
+        if (whereToSet == null) { return; }
+        whereToSet.offsetMin = offsetMin;
+        whereToSet.offsetMax = offsetMax;
+    }
+    public static void SetSpriteToImage(this GameObject whereToget, Sprite spriteToSet)
     {
         Image image = whereToget.GetComponent<Image>();
         if (image == null) { return; }
@@ -58,9 +64,19 @@ public static class MyExtensionMethods
     #region GENERIC_EXTENSIONS
     public static void CacheComponents<T>(this T[] whereToCache,GameObject[] from)
     {
-        for (int index = 0; index < from.Length; index++)
+        if (from != null)
         {
-            whereToCache[index] = from[index].GetComponent<T>();
+            for (int index = 0; index < from.Length; index++)
+            {
+                whereToCache[index] = from[index].GetComponent<T>();
+            }
+        }
+    }
+    public static void CacheComponent<T>(this T whereToCache, GameObject from)
+    {
+        if (from != null)
+        {
+            whereToCache = from.GetComponent<T>();
         }
     }
     #endregion
@@ -85,6 +101,33 @@ public static class MyExtensionMethods
         foreach (Text text in textList)
         {
             text.text = whatToSet;
+        }
+    }
+    #endregion
+    #region UI_SLIDER_EXTENSIONS
+    public static void SetSLider(this Slider[] sliderList, float whatToSet)
+    {
+        foreach (Slider slider in sliderList)
+        {
+            slider.onValueChanged.AddListener(delegate { slider.value = whatToSet; });
+        }
+    }
+    #endregion
+    #region UI_IMAGE_EXTENSIONS
+    public static void SetImageFill(this Image[] imageList, float whatToSet)
+    {
+        foreach (Image image in imageList)
+        {
+            image.fillAmount = whatToSet;
+        }
+    }
+    #endregion
+    #region FILE_EXTENSIONS
+    public static void CreateFileAsDirectedByPath(this string path)
+    {
+        if(!File.Exists(path))
+        {
+            File.Create(path);
         }
     }
     #endregion

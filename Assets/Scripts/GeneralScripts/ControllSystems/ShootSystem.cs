@@ -20,7 +20,7 @@ public class ShootSystem : MonoBehaviour
     #endregion
     #region FIELDS
     [Header(StringHeadersInfo.OFFSETVECTOR_Header)]
-    public Vector3 offset;
+    public Vector3 offset = Vector3.zero;
     [Header(StringHeadersInfo.AMMOSTATS_Header)]
     private float attackRate;
     private Timer timerForActions;

@@ -12,13 +12,6 @@ public class StartGameScript : MonoBehaviour
     #region FILE_PROCESSING_PART
     private JsonData jData;
     private string jsonName;
-    void CreateJsonFile(string jsonName)
-    {
-        if (!File.Exists(jsonName))
-        {
-            File.Create(jsonName);
-        }
-    }
     #endregion
     #region STANDART_EVENTS
     void Awake()
@@ -28,7 +21,7 @@ public class StartGameScript : MonoBehaviour
         {
             jData = new JsonData();
         }
-        CreateJsonFile(jsonName);
+        jsonName.CreateFileAsDirectedByPath();
     }
     #endregion
     #region LOGIC

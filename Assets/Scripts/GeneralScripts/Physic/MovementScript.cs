@@ -26,7 +26,7 @@ public class MovementScript : MonoBehaviour
     }
     private void SetSpeed()
     {
-        speed = Random.Range(minSpeed, maxSpeed);
+        speed = Random.Range(minSpeed, maxSpeed + PlayerStats.Current.Level * 2);
     }
     private void SetStartDirection()
     {
