@@ -107,7 +107,6 @@ public class GunStats
         }
     }
     #endregion
-    #region SINGLETON
     [NonSerialized]
     private static GunStats instance;
     public static GunStats Instance
@@ -128,7 +127,6 @@ public class GunStats
             }
         }
     }
-    #endregion
     #region MESSURES
     [SerializeField]
     private double maxPowerFull;
@@ -200,11 +198,9 @@ public class GunStats
     private JsonData gunStatJData;
     public void LoadDataFromJSON(string jsonName)
     {
-        #region GET_DATA
         string asset = jsonName.Replace(".json", "");
         gunStatJsonString = Resources.Load<TextAsset>(StringPathsInfo.GUNS_TEXTFILES_PATH + asset).text;
         if (gunStatJsonString.Length == 0) { return; }
-        #endregion
         #region PARSE_DATA
         GunStats gunStat = JsonUtility.FromJson<GunStats>(gunStatJsonString);
         if (gunStat.Equals(GunStats.Empty))

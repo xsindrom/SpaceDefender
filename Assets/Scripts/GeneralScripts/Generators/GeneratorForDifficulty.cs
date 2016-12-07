@@ -3,7 +3,6 @@ using System.Collections;
 
 public class GeneratorForDifficulty : MonoBehaviour
 {
-    #region FIELDS
     [Header(StringHeadersInfo.TIMEPERIOD_Header)]
     public float periodOfTime = 0.0f;
     [Header(StringHeadersInfo.DELTA_Time_Header)]
@@ -13,8 +12,6 @@ public class GeneratorForDifficulty : MonoBehaviour
     private GeneratorForObjects generator;
     private Timer timerForActions;
     private int playerLevel;
-    #endregion
-    #region STANDART_EVENTS
     void Awake()
     {
         playerLevel = PlayerStats.Current.Level;
@@ -41,8 +38,6 @@ public class GeneratorForDifficulty : MonoBehaviour
             return;
         }
     }
-    #endregion
-    #region LOGIC
     private void IncreaseDifficultyTime()
     {
         if (generator.timeToGenerate > minTime)
@@ -55,5 +50,4 @@ public class GeneratorForDifficulty : MonoBehaviour
         generator.minAmount++;
         generator.maxAmount++;
     }
-    #endregion
 }

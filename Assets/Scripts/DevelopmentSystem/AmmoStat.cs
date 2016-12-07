@@ -4,15 +4,12 @@ using System.Collections;
 [Serializable]
 public class AmmoStat
 {
-    #region FIELDS
     [SerializeField]
     private int ammoSize;
     [SerializeField]
     private int currentAmmo;
     [SerializeField]
     private int deltaAmmo;
-    #endregion
-    #region PROPERTIES
     public int AmmoSize
     {
         get { return ammoSize; }
@@ -40,7 +37,6 @@ public class AmmoStat
             if (value >= 0 && value <= ammoSize) { deltaAmmo = value; }
         }
     }
-    #endregion
     #region LOGIC
     public bool IsAbleToShoot()
     {

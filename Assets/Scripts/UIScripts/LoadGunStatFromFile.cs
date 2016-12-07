@@ -47,7 +47,6 @@ public class LoadGunStatFromFile : MonoBehaviour
     private Text ammoSizeStatText;
     private Text gunTypeStatText;
     #endregion
-    #region STANDART_EVENTS
     void Start()
     {
         string gunStatJsonString = Resources.Load<TextAsset>(StringPathsInfo.GUNS_TEXTFILES_ALL_PATH.Replace(".json", "")).text;
@@ -71,7 +70,6 @@ public class LoadGunStatFromFile : MonoBehaviour
                 break;
             }
         }
-        #region SET_BLOCKERS
         for (int index = count; index < tempStat.Length; index++)
         {
             Image toAdd = Instantiate(blocker) as Image;
@@ -79,7 +77,6 @@ public class LoadGunStatFromFile : MonoBehaviour
             toAdd.gameObject.SetRectTransformer(0.0f,content.GetChild(index).GetComponent<RectTransform>().anchorMin.y,
                                                 1.0f,content.GetChild(index).GetComponent<RectTransform>().anchorMax.y);
         }
-        #endregion
         #region cacheImages
         GameObject powerFullStatGameObjectImage = GameObject.Find(StringNamesInfo.POWERFULLSTAT_image_name);
         if(powerFullStatGameObjectImage)
@@ -126,7 +123,6 @@ public class LoadGunStatFromFile : MonoBehaviour
         #endregion
         SetData();
     }
-    #endregion
     #region LOGIC
     public void SetData()
     {

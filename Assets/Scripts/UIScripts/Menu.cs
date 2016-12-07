@@ -6,10 +6,11 @@ using System.Collections;
 using System.Collections.Generic;
 public class Menu : MonoBehaviour
 {
-    #region Fields
-    public string pathLeaders = "";
-    public string pathCurrent = "";
-    #endregion
+    public static string pathLeaders = "";
+    public static string pathCurrent = "";
+    public static string pathAchieves = "";
+    public static string pathConfig = "";
+    public static List<Scene> scenes = new List<Scene>();
     #region SINGLETON
     private static Menu instance;
     public static Menu Instance
@@ -34,28 +35,35 @@ public class Menu : MonoBehaviour
         }
     }
     #endregion
-    #region STANDART_EVENTS
     
-    void OnEnable()
-    {
-        SceneManager.sceneLoaded += delegate { (Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName).CreateFileAsDirectedByPath(); };
-        SceneManager.sceneLoaded += delegate { (Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH).CreateFileAsDirectedByPath(); };
-    }
-    void OnDisable()
-    {
-        SceneManager.sceneLoaded -= delegate { (Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName).CreateFileAsDirectedByPath(); };
-        SceneManager.sceneLoaded -= delegate { (Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH).CreateFileAsDirectedByPath(); };
-    }
     void Awake()
     {
-        pathLeaders = Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName;
-        pathCurrent = Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH;
+        scenes.Add(SceneManager.GetActiveScene());
+        if (SceneManager.GetActiveScene().buildIndex == 0 && scenes.Count == 1)
+        {
+            pathLeaders = Application.persistentDataPath + StringPathsInfo.LEADERS_jsonName;
+            pathCurrent = Application.persistentDataPath + StringPathsInfo.CURRENT_PLAYERSTATS_PATH;
+            pathAchieves = Application.persistentDataPath + StringPathsInfo.ACHIEVEMENTS_PATH;
+            pathConfig = Application.persistentDataPath + StringPathsInfo.CONFIG_PATH;
+
+            pathLeaders.CreateFileAsDirectedByPath();
+            pathCurrent.CreateFileAsDirectedByPath();
+            pathAchieves.CreateFileAsDirectedByPath();
+            pathConfig.CreateFileAsDirectedByPath();
+
+            GunRendererScript.baseSprite = Resources.LoadAll<Sprite>(StringPathsInfo.GUNS_base_IMAGES_PATH);
+            GunRendererScript.barrelSprite = Resources.LoadAll<Sprite>(StringPathsInfo.GUNS_barrel_IMAGES_PATH);
+        }
     }
     void Start()
     {
+        LoadSettings();
         LoadGame();
+        if (AchievementManager.Instance.AllAchievements.Count == 0)
+        {
+            AchievementManager.Instance.LoadAchievements();
+        }
     }
-    #endregion
     #region LOGIC
     public void LoadGame()
     {
@@ -65,24 +73,19 @@ public class Menu : MonoBehaviour
     }
     public void GoToMainMenu()
     {
-        #region FILE_PROCESSING PART
         SaveLeader();
-        #endregion
         OnSceneLeft(0);
     }
-    
+
     private void WorkWithListPlayer(JsonData jDataList)
     {
         List<PlayerStats> listPlayer = new List<PlayerStats>();
-        #region InitList
-        for (int index = 0; index < jDataList.Count; index++)
+        for (int index = 0, size = jDataList.Count; index < size; index++)
         {
             listPlayer.Add(new PlayerStats(index, pathLeaders));
         }
-        #endregion
         if (listPlayer.Count == 0) { listPlayer.Add(PlayerStats.Current); }
-        #region ProcessList
-        for (int index = 0; index < listPlayer.Count; index++)
+        for (int index = 0, size = listPlayer.Count; index < size; index++)
         {
             if (PlayerStats.Current.Score > listPlayer[index].Score)
             {
@@ -90,19 +93,20 @@ public class Menu : MonoBehaviour
                 break;
             }
         }
+        for (int index = 0, size = listPlayer.Count; index < size; index++)
+        {
+            listPlayer[index].Id = index + 1;
+        }
         if (listPlayer.Count > 10)
         {
-            listPlayer.RemoveRange(10, listPlayer.Count-10);
+            listPlayer.RemoveRange(10, listPlayer.Count - 10);
         }
-        #endregion
         jDataList = new JsonData();
         jDataList.SetJsonType(JsonType.Array);
-        #region TransfromListToJdataList
         foreach (PlayerStats playerInList in listPlayer)
         {
             jDataList.Add(JsonMapper.ToObject(JsonUtility.ToJson(playerInList)));
         }
-        #endregion
         File.WriteAllText(pathLeaders, jDataList.ToJson());
     }
     public void StartGame()
@@ -143,6 +147,52 @@ public class Menu : MonoBehaviour
         }
         if (!jDataList.IsArray) { jDataList.SetJsonType(JsonType.Array); }
         WorkWithListPlayer(jDataList);
+    }
+    public void SaveAchievements()
+    {
+        AchievementManager.Instance.SaveAchievements();
+    }
+    public void LoadAchievements()
+    {
+        AchievementManager.Instance.LoadAchievements();
+    }
+    public void SaveSettings()
+    {
+        SettingsScript.VolumeSettings volumeSettings = new SettingsScript.VolumeSettings(SettingsScript.EffectVolume,
+                                                                                         SettingsScript.MusicVolume);
+        File.WriteAllText(pathConfig, JsonUtility.ToJson(volumeSettings, true));
+    }
+    public void LoadSettings()
+    {
+        string jString = File.ReadAllText(pathConfig);
+        if (jString.Length == 0)
+        {
+            return;
+        }
+        SettingsScript.VolumeSettings volumeSettings = JsonUtility.FromJson<SettingsScript.VolumeSettings>(jString);
+        if (volumeSettings == null)
+        {
+            return;
+        }
+        SettingsScript.EffectVolume = volumeSettings.effectVolume;
+        SettingsScript.MusicVolume = volumeSettings.musicVolume;
+
+        GameObject[] musicObjects = GameObject.FindGameObjectsWithTag(StringNamesInfo.MUSIC_tag);
+        GameObject[] effectObjects = GameObject.FindGameObjectsWithTag(StringNamesInfo.EFFECT_tag);
+        if (musicObjects != null)
+        {
+            foreach (GameObject musicObject in musicObjects)
+            {
+                musicObject.GetComponent<AudioSource>().volume = SettingsScript.MusicVolume;
+            }
+        }
+        if (effectObjects != null)
+        {
+            foreach (GameObject effectOjbect in effectObjects)
+            {
+                effectOjbect.GetComponent<AudioSource>().volume = SettingsScript.EffectVolume;
+            }
+        }
     }
     #endregion
 }

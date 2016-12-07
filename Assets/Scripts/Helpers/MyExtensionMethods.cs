@@ -14,6 +14,17 @@ public static class MyExtensionMethods
             whereToAdd.AddComponent(component.GetType());
         }
     }
+    public static void InitAudio(ref AudioSource source, string objectName)
+    {
+        if (!source)
+        {
+            GameObject toFind = GameObject.Find(objectName);
+            if (toFind)
+            {
+                source = toFind.GetComponent<AudioSource>();
+            }
+        }
+    }
     public static void SetRectTransformer(this GameObject whereToGet, float minAnchorX, float minAnchorY, float maxAnchorX, float maxAnchorY)
     {
         RectTransform rectTransformer = whereToGet.GetComponent<RectTransform>();

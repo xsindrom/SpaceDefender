@@ -6,18 +6,16 @@ public class TouchController : MonoBehaviour
 {
 
     public GameObject whatToControll;
-    #region COMPONENTS_TO_CACHE
     private ControllGunSystem controllGun;
     private ShootSystem controllShoot;
-    public Animator animationController; //----TEST
-
-    #endregion
-    #region STATES
+    public Animator animationController;
+    public AudioSource shootSound;
+    public AudioSource deniedSound;
     public bool shootState = false;
-    #endregion
-    #region STANDART_EVENTS
     void Start()
     {
+        MyExtensionMethods.InitAudio(ref shootSound, StringNamesInfo.FIRE_SOUND);
+        MyExtensionMethods.InitAudio(ref deniedSound, StringNamesInfo.DENIED_SOUND);
         if (!whatToControll)
         {
             return;
@@ -31,6 +29,25 @@ public class TouchController : MonoBehaviour
         rotateController.minValue = controllGun.MinAngle;
         rotateController.maxValue = controllGun.MaxAngle;
         rotateController.onValueChanged.AddListener(delegate { controllGun.RotateGun(rotateController.value); });
+        StartCoroutine(LateStart());
+    }
+    IEnumerator LateStart()
+    {
+        yield return new WaitForSeconds(Time.deltaTime);
+        controllShoot.TimerForActions.AddAction(delegate
+        {
+            if (shootSound && SettingsScript.EffectVolume > 0.01f)
+            {
+                if (controllShoot.AmmoStats.IsAbleToShoot())
+                {
+                    shootSound.Play();
+                }
+                else
+                {
+                    deniedSound.Play();
+                }
+            }
+        });
     }
     void Update()
     {
@@ -39,9 +56,6 @@ public class TouchController : MonoBehaviour
             controllShoot.TimerForActions.CompleteAction();
         }
     }
-    #endregion
-    #region LOGIC
-    #region SHOOT_EVENT
     public void Shoot()
     {
         shootState = true;
@@ -52,6 +66,4 @@ public class TouchController : MonoBehaviour
         shootState = false;
         animationController.SetBool("isShooting", shootState);
     }
-    #endregion
-    #endregion
 }

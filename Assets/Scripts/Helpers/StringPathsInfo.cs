@@ -5,9 +5,11 @@ using System;
 public static class StringPathsInfo
 {
     //--A---
+    public const string ACHIEVEMENTS_PATH = "/Achievements.json";
     //--B---
     //--C---
     public const string CURRENT_PLAYERSTATS_PATH = "/CurrentPlayerStats.json";
+    public const string CONFIG_PATH = "/Config.json";
     //--D---
     //--E---
     //--F---

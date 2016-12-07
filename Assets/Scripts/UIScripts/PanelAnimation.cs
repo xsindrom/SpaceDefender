@@ -4,22 +4,16 @@ using System.Collections;
 public class PanelAnimation : MonoBehaviour
 {
     public GameObject panelToControll;
-    #region COMPONENTS_TO_CACHE
     private Animator animationController;
-    #endregion
-    #region STATES
     public static bool isPlayed = false;
     public static GameObject currentPanel = null;
-    #endregion
-    #region STANDART_EVENTS
     void Awake()
     {
         isPlayed = false;
     }
-    #endregion
-    #region LOGIC
     public void ShowPanel()
     {
+        PanelAnimation.HideCurrentPanel();
         if (!isPlayed)
         {
             panelToControll.SetActive(true);
@@ -56,7 +50,6 @@ public class PanelAnimation : MonoBehaviour
             currentPanel = null;
         }
     }
-    #endregion
     IEnumerator WaitBeforeDeactivate()
     {
         yield return new WaitForSeconds(animationController.GetCurrentAnimatorStateInfo(0).length);

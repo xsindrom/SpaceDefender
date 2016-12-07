@@ -36,6 +36,8 @@ public class PlayerStats
     }
     [SerializeField]
     private int score;
+    [SerializeField]
+    private int scoreRank;
     public int Score
     {
         get { return score; }
@@ -45,6 +47,10 @@ public class PlayerStats
             {
                 score = value;
                 GUIManager.Instance.ScoreToSet = score;
+                float valueForAchievement = (float)AchievementManager.AchievementType.SCORE_achievement * scoreRank * 1.5f;
+                AchievementManager.Instance.CreateAchievement(score, AchievementManager.AchievementType.SCORE_achievement,
+                                                              ref scoreRank, StringCaptionsInfo.SCORE_achievementText,
+                                                              valueForAchievement);
             }
         }
     }
@@ -54,24 +60,40 @@ public class PlayerStats
     }
     [SerializeField]
     private int level;
+    [SerializeField]
+    private int levelRank;
+    private int CalculateLevelLessEleven(int level)
+    {
+        return (int)(40.0f * Mathf.Pow(level, 2) + 360.0f * level);
+    }
+    private int CalculateLevelUpperEleven(int level)
+    {
+        return (int)(-0.4f * Math.Pow(level, 3) + 40.4f * Math.Pow(level, 2) + 396.0f * level);
+    }
     public int Level
     {
         get { return level; }
         set
         {
-            if (value >= 0 && value <= 30)
+            if (value != level)
             {
-                level = value;
-                maxExperience = (int)Mathf.Pow(2, level);
-                ScoreMultipler = level;
-                GUIManager.Instance.LevelToSet = level;
+                if (value >= 0 && value <= 30)
+                {
+                    level = value;
+                    experience = 0;
+                    maxExperience = (level > 0 && level < 11) ? CalculateLevelLessEleven(level) : CalculateLevelUpperEleven(level);
+                    ScoreMultipler = level;
+                    GUIManager.Instance.LevelToSet = level;
+                    AchievementManager.Instance.CreateAchievement(level, AchievementManager.AchievementType.LEVEL_achievement,
+                                                                  ref levelRank, StringCaptionsInfo.LEVEL_achievementText,
+                                                                  (float)AchievementManager.AchievementType.LEVEL_achievement * levelRank);
+                }
+                if (level > 30)
+                {
+                    level = 30;
+                    ScoreMultipler = level;
+                }
             }
-            if (Level > 30)
-            {
-                Level = 30;
-                ScoreMultipler = level;
-            }
-            
         }
     }
     public int LevelLeader
@@ -108,10 +130,6 @@ public class PlayerStats
             if (value != scoreMultipler)
             {
                 scoreMultipler = value;
-                if (value < 0)
-                {
-                    scoreMultipler = 0;
-                }
                 GUIManager.Instance.ScoreMultiplerToSet = scoreMultipler;
             }
         }
@@ -119,6 +137,8 @@ public class PlayerStats
     #region Monetization
     [SerializeField]
     private float money = 0.0f;
+    [SerializeField]
+    private int moneyRank;
     public float Money
     {
         get { return money; }
@@ -132,30 +152,16 @@ public class PlayerStats
                     money = 0.0f;
                 }
                 GUIManager.Instance.MoneyToSet = money;
-            }
-        }
-    }
-    [SerializeField]
-    private int returnItem = 0;
-    public int ReturnItem
-    {
-        get { return returnItem; }
-        set
-        {
-            if (value != returnItem)
-            {
-                returnItem = value;
-                if (returnItem < 0)
-                {
-                    returnItem = 0;
-                }
-                GameManager.Instance.returnItem = returnItem;
-                GUIManager.Instance.ReturnToLifeItemToSet = returnItem;
+                AchievementManager.Instance.CreateAchievement(money, AchievementManager.AchievementType.MONEY_achievement,
+                                                              ref moneyRank, StringCaptionsInfo.MONEY_achievementText,
+                                                              (float)AchievementManager.AchievementType.MONEY_achievement * moneyRank);
             }
         }
     }
     [SerializeField]
     private int destroyerForMeteorits = 0;
+    [SerializeField]
+    private int destroyerRank;
     public int DestroyerForMeteorits
     {
         get { return destroyerForMeteorits; }
@@ -170,11 +176,40 @@ public class PlayerStats
                 }
                 GameManager.Instance.destroyerForMeteorits = destroyerForMeteorits;
                 GUIManager.Instance.DestroyerForMeteoritsItemToSet = destroyerForMeteorits;
+                AchievementManager.Instance.CreateAchievement(destroyerForMeteorits, AchievementManager.AchievementType.SHOP_achievement,
+                                                              ref destroyerRank, StringCaptionsInfo.SHOP_destroyMeteorsAchievementText,
+                                                              (float)AchievementManager.AchievementType.SHOP_achievement * destroyerRank);
+            }
+        }
+    }
+    [SerializeField]
+    private int returnItem = 0;
+    [SerializeField]
+    private int returnRank;
+    public int ReturnItem
+    {
+        get { return returnItem; }
+        set
+        {
+            if (value != returnItem)
+            {
+                returnItem = value;
+                if (returnItem < 0)
+                {
+                    returnItem = 0;
+                }
+                GameManager.Instance.returnItem = returnItem;
+                GUIManager.Instance.ReturnToLifeItemToSet = returnItem;
+                AchievementManager.Instance.CreateAchievement(returnItem, AchievementManager.AchievementType.SHOP_achievement,
+                                                              ref returnRank, StringCaptionsInfo.SHOP_returnToLifeAchievementText,
+                                                              (float)AchievementManager.AchievementType.SHOP_achievement * returnRank);
             }
         }
     }
     [SerializeField]
     private int restoreAmmoItem = 0;
+    [SerializeField]
+    private int restoreRank;
     public int RestoreAmmoItem
     {
         get { return restoreAmmoItem; }
@@ -189,6 +224,9 @@ public class PlayerStats
                 }
                 GameManager.Instance.restoreAmmoItem = restoreAmmoItem;
                 GUIManager.Instance.RestoreAmmoItemToSet = restoreAmmoItem;
+                AchievementManager.Instance.CreateAchievement(restoreAmmoItem, AchievementManager.AchievementType.SHOP_achievement,
+                                                              ref restoreRank, StringCaptionsInfo.SHOP_restoreAmmoAchievementText,
+                                                              (float)AchievementManager.AchievementType.SHOP_achievement * restoreRank);
             }
         }
     }
@@ -199,23 +237,17 @@ public class PlayerStats
     private JsonData jData;
     public void LoadLeaderStats(int id, string jsonName)
     {
-        #region GET_DATA
         string jString = File.ReadAllText(jsonName);
         if (jString.Length == 0) { return; }
         jData = JsonMapper.ToObject(jString);
-        #endregion
-        #region PARSE_DATA
         this.id = int.Parse(jData[id]["id"].ToString());
         this.name = jData[id]["name"].ToString();
         this.score = int.Parse(jData[id]["score"].ToString());
         this.level = int.Parse(jData[id]["level"].ToString());
-        #endregion
     }
     public void LoadPlayerStats(string jsonName)
     {
-        #region GET_DATA
         string jString = File.ReadAllText(jsonName);
-        #endregion
         #region PARSE_DATA
         PlayerStats tempStat = JsonUtility.FromJson<PlayerStats>(jString);
         if (tempStat == null)
@@ -233,6 +265,12 @@ public class PlayerStats
         this.DestroyerForMeteorits = tempStat.destroyerForMeteorits;
         this.ReturnItem = tempStat.returnItem;
         this.RestoreAmmoItem = tempStat.restoreAmmoItem;
+        this.scoreRank = tempStat.scoreRank;
+        this.levelRank = tempStat.levelRank;
+        this.moneyRank = tempStat.moneyRank;
+        this.destroyerRank = tempStat.destroyerRank;
+        this.returnRank = tempStat.returnRank;
+        this.restoreRank = tempStat.restoreRank;
         #endregion
     }
     public void SavePlayerStats(string jsonName)
@@ -253,6 +291,12 @@ public class PlayerStats
         this.DestroyerForMeteorits = 0;
         this.ReturnItem = 0;
         this.RestoreAmmoItem = 0;
+        this.restoreRank = 1;
+        this.returnRank = 1;
+        this.destroyerRank = 1;
+        this.levelRank = 2;
+        this.scoreRank = 1;
+        this.moneyRank = 1;
     }
     public PlayerStats(string name)
     {
@@ -268,6 +312,12 @@ public class PlayerStats
         this.DestroyerForMeteorits = 0;
         this.ReturnItem = 0;
         this.RestoreAmmoItem = 0;
+        this.restoreRank = 1;
+        this.returnRank = 1;
+        this.destroyerRank = 1;
+        this.levelRank = 2;
+        this.scoreRank = 1;
+        this.moneyRank = 1;
     }
     public PlayerStats(int id, string jsonName)
     {
@@ -285,6 +335,12 @@ public class PlayerStats
         this.ReturnItem = 0;
         this.DestroyerForMeteorits = 0;
         this.RestoreAmmoItem = 0;
+        this.restoreRank = 1;
+        this.returnRank = 1;
+        this.destroyerRank = 1;
+        this.levelRank = 2;
+        this.scoreRank = 1;
+        this.moneyRank = 1;
     }
     public PlayerStats(PlayerStats playerStats)
     {
@@ -303,8 +359,36 @@ public class PlayerStats
         this.DestroyerForMeteorits = playerStats.DestroyerForMeteorits;
         this.ReturnItem = playerStats.ReturnItem;
         this.RestoreAmmoItem = playerStats.RestoreAmmoItem;
+        this.restoreRank = playerStats.restoreRank;
+        this.returnRank = playerStats.returnRank;
+        this.destroyerRank = playerStats.destroyerRank;
+        this.levelRank = playerStats.levelRank;
+        this.scoreRank = playerStats.scoreRank;
+        this.moneyRank = playerStats.moneyRank;
     }
     public readonly static PlayerStats Empty = new PlayerStats("empty");
+    #endregion
+
+    [NonSerialized]
+    private static PlayerStats current = PlayerStats.Empty;
+    public static PlayerStats Current
+    {
+        get { return current; }
+        set
+        {
+            if (value != null)
+            {
+                current = value;
+            }
+        }
+    }
+
+    #region LOGIC
+    public void IncreaseLevel(int baseExperience)
+    {
+        Experience += (baseExperience * 5) + 45;
+    }
+    #endregion
     public override bool Equals(object obj)
     {
         if (obj == null) { return false; }
@@ -336,28 +420,4 @@ public class PlayerStats
         toReturn += destroyerForMeteorits;
         return toReturn;
     }
-    #endregion
-
-    #region SINGLETON
-    [NonSerialized]
-    private static PlayerStats current = PlayerStats.Empty;
-    public static PlayerStats Current
-    {
-        get { return current; }
-        set
-        {
-            if (value != null)
-            {
-                current = value;
-            }
-        }
-    }
-    #endregion
-
-    #region LOGIC
-    public void IncreaseLevel(int experienceToAdd)
-    {
-        Experience += experienceToAdd;
-    }
-    #endregion
 }

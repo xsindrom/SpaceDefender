@@ -33,17 +33,12 @@ public class ControllGunSystem : MonoBehaviour
         }
     }
     #endregion
-    #region COMPONENTS_TO_CACHE
     private Rigidbody2D rbody;
-    #endregion
-    #region STANDART_EVENTS
     void Start()
     {
         rbody = gameObject.GetComponent<Rigidbody2D>();
     }
-    #endregion
 #if UNITY_ANDROID
-    #region LOGIC
     public void RotateLeftGun()
     {
         int rotationAngle = Mathf.FloorToInt(rbody.rotation);
@@ -67,7 +62,6 @@ public class ControllGunSystem : MonoBehaviour
             rbody.rotation = angleToSet;
         }
     }
-    #endregion
 #endif
 
 #if UNITY_STANDALONE_WIN

@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
     {
         animController = gameObject.GetComponent<PanelAnimation>();
     }
-    #region SpecialFunctions
     public void DestroyAllMeteorits()
     {
         if (destroyerForMeteorits > 0)
@@ -99,5 +98,4 @@ public class GameManager : MonoBehaviour
             PlayerStats.Current.RestoreAmmoItem = restoreAmmoItem;
         }
     }
-    #endregion
 }

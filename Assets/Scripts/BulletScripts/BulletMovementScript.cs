@@ -3,16 +3,11 @@ using System.Collections;
 
 public class BulletMovementScript : MonoBehaviour
 {
-    #region FIELDS_TO_DISPLAY
     public string nameFrom;
     public float speed;
-    #endregion
-    #region FIELDS_TO_CACHE
     private GameObject from;
-    #endregion
     private float angle;
     private float timeToDestroy = 5.0f;
-    #region STANDART_EVENTS
     void Start()
     {
         from = GameObject.Find(nameFrom);
@@ -32,8 +27,6 @@ public class BulletMovementScript : MonoBehaviour
     {
         Move();
     }
-    #endregion
-    #region LOGIC
     IEnumerator DestroyThis()
     {
         yield return new WaitForSeconds(timeToDestroy);
@@ -49,5 +42,4 @@ public class BulletMovementScript : MonoBehaviour
     {
         transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
-    #endregion
 }

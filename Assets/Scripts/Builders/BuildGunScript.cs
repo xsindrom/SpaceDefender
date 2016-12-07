@@ -7,7 +7,6 @@ public class BuildGunScript : MonoBehaviour
 {
     [Header(StringHeadersInfo.OBJECTSTOGENERATE_Header)]
     public GameObject toInstatiate;
-    #region GUN_STATS
     private GunStats gunStats;
     public GunStats GunStat
     {
@@ -15,22 +14,16 @@ public class BuildGunScript : MonoBehaviour
     }
     public Sprite baseSprite;
     public Sprite barrelSprite;
-    #endregion
-    #region SHOOT_SYSTEM
     private ShootSystem shootSystem;
     public ShootSystem ShootSystem
     {
         get { return shootSystem; }
     }
-    #endregion
-    #region CONTROLL_SYSTEM
     private ControllGunSystem controllGunSystem;
     public ControllGunSystem ControllGunSystem
     {
         get { return controllGunSystem; }
     }
-    #endregion
-    #region STANDART_EVENTS
     void Awake()
     {
         baseSprite = GunRendererScript.baseSprite[GunRendererScript.indexToSet];
@@ -54,5 +47,4 @@ public class BuildGunScript : MonoBehaviour
         controllGunSystem.MinAngle = (float)gunStats.MinAngle;
         controllGunSystem.MaxAngle = (float)gunStats.MaxAngle;
     }
-    #endregion
 }

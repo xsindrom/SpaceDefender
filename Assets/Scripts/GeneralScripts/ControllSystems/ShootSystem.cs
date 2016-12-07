@@ -4,7 +4,6 @@ using System.IO;
 using LitJson;
 public class ShootSystem : MonoBehaviour
 {
-    #region SINGLETON
     private GameObject toInstantiate;
     public GameObject ToInstantiate
     {
@@ -17,19 +16,16 @@ public class ShootSystem : MonoBehaviour
             }
         }
     }
-    #endregion
-    #region FIELDS
     [Header(StringHeadersInfo.OFFSETVECTOR_Header)]
     public Vector3 offset = Vector3.zero;
     [Header(StringHeadersInfo.AMMOSTATS_Header)]
     private float attackRate;
     private Timer timerForActions;
     private AmmoStat ammoStat;
-    #endregion
     #region PROPERTIES
     public AmmoStat AmmoStats
     {
-        private get { return ammoStat; }
+        get { return ammoStat; }
         set
         {
             if (value != null)
@@ -54,7 +50,6 @@ public class ShootSystem : MonoBehaviour
         get { return timerForActions; }
     }
     #endregion
-    #region LOGIC
     public void CreateInfoAboutShoot()
     {
         GUIManager.Instance.AmmoToSet = ammoStat.CurrentAmmo;
@@ -105,5 +100,4 @@ public class ShootSystem : MonoBehaviour
         }
     }
 #endif
-    #endregion
 }

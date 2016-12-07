@@ -3,11 +3,9 @@ using System.Collections;
 
 public class ShopManager : MonoBehaviour
 {
-    #region FIELDS
     private float costForDestroyer = 100.0f;
     private float costForReturn = 1000.0f;
     private float costForRestoreAmmo = 100.0f;
-    #endregion
     #region SINGLETON
     private static ShopManager instance = null;
     public static ShopManager Instance
